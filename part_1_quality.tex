@@ -1,0 +1,399 @@
+\documentclass[10pt]{beamer}
+
+
+\input{includes}
+\input{header}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}{}
+  \centering
+  \Large
+  \textbf{Qualité de code}
+\end{frame}
+
+
+\section{Structure d'un programme}
+
+\begin{frame}[fragile]{Structurer un programme, version simple}
+
+  \begin{block}{Structure en plusieurs fichiers}
+    \begin{itemize}
+      \item Un ou plusieurs modules contenant les fonctionnalités implémentées
+      \item Un programme principal
+    \end{itemize}
+  \end{block}
+
+\bigskip
+
+\begin{lstlisting}[numbers=none]
+my_project/
+  - module1.py
+  - module2.py
+  - main.py
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Structurer un programme}
+
+  \texttt{module1.py}
+\begin{lstlisting}[language=python, numbers=none]
+import math
+import sys
+
+def prod(a, b):
+    return a * b
+
+def add(a, b):
+    return a + b
+\end{lstlisting} 
+
+\texttt{main.py}
+
+\begin{lstlisting}[language=python, numbers=none]
+from module1 import add, prod
+print(add(1, 2))
+print(prod(1, 2))
+\end{lstlisting} 
+\end{frame}
+
+
+\begin{frame}[fragile]{Structurer un programme}
+
+  \begin{block}{Contrainte}
+    \medskip
+
+    Si les fichiers \texttt{main.py} et \texttt{module1.py} sont dans le même dossier, vous pouvez faire
+\begin{lstlisting}[language=bash, numbers=none]
+python main.py
+\end{lstlisting}
+
+  Sinon, ça ne fonctionnera pas !
+  \end{block}
+\end{frame}
+
+
+\section{Conventions de code à retenir}
+
+\begin{frame}{PEP8}
+
+  \begin{block}{PEP8 -- Style de code}
+    \medskip
+    Les Python Enhancement Proposals, ou PEP, sont un ensemble de recommandations liées au langage python.
+
+    La PEP8 définit des conventions \textbf{assez restrictives} de style de code.
+  \end{block}
+
+  Page officielle : \url{peps.python.org/pep-0008}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Longueur des lignes}
+  \begin{block}{}
+    \medskip
+    La PEP8 recommande entre 80 et 100 charactères maximum.
+
+    Je recommande \textbf{150 charactères}.
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Indentation}
+  \begin{block}{}
+    \medskip
+    Utiliser une identation à \textbf{4 espaces exactement} et ne pas utiliser de \textbf{tabulation}.
+    
+    Exemple pour un appel de fonction
+\begin{lstlisting}[language=python, numbers=none]
+foo = long_function_name(var_one, var_two,
+                         var_three, var_four)
+\end{lstlisting}
+
+ou bien
+
+\begin{lstlisting}[language=python, numbers=none]
+foo = long_function_name(
+    var_one, var_two,
+    var_three, var_four)
+\end{lstlisting}
+
+    Exemple pour la définition d'une liste
+\begin{lstlisting}[language=python, numbers=none]
+l = [[1, 2, 3,
+      4, 5, 6]]
+\end{lstlisting}
+      
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Blocs de code et retours à la ligne}
+  \begin{block}{}
+    \medskip
+
+    \begin{enumerate}
+      \item Coder des blocs de code \textbf{cohérents}
+      \item Séparer les blocs de code par un \textbf{unique} retour à la ligne.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]{Encoding et langue}
+
+  \begin{block}{}
+    \medskip
+    Utiliser l'anglais et proscrire les caractères spéciaux (encodage UTF-8)
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{Imports}
+  \begin{block}{}
+    \medskip
+    \begin{itemize}
+      \item Un import par ligne
+      \item Préférer les imports \textbf{absolus}
+      \item Ordre des imports : package de la librairie standard, librairies installées puis librairies locales
+
+Par exemple :
+\begin{lstlisting}[language=python, numbers=none]
+import os
+import sys
+import time
+
+import numpy as np
+
+import mypackage
+\end{lstlisting}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Chaîne de charactères}
+  \begin{block}{}
+    \medskip
+    Il est possible de définir des chaînes de caractères avec " " ou bien ' '.
+
+    PEP8 ne donne pas de recommandation mais il est important de ne pas utiliser les deux façons de faire (uniformisation du code)
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{``Whitespaces'' dans les expressions}
+  \begin{block}{}
+    \medskip
+    Proscrire les `espaces blancs' inutiles dans les situations suivantes
+  \end{block}
+
+  Correct :
+\begin{lstlisting}[language=python, numbers=none]
+spam(ham[1], {eggs: 2})
+foo = (0,)
+if x == 4: print(x, y); x, y = y, x
+spam(1)
+dct['key'] = lst[index]
+\end{lstlisting}
+
+Incorrect :
+\begin{lstlisting}[language=python, numbers=none]
+spam( ham[ 1 ], { eggs: 2 } )
+bar = (0, )
+if x == 4 : print(x , y) ; x , y = y , x
+spam (1)
+dct ['key'] = lst [index]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{``Whitespaces'' dans les expressions (suite)}
+  \begin{block}{}
+    \medskip
+    Proscrire les `espaces blancs' inutiles dans les situations suivantes
+  \end{block}
+
+  Correct :
+\begin{lstlisting}[language=python, numbers=none]
+x = 1
+y = 2
+long_variable = 3
+\end{lstlisting}
+
+Incorrect :
+\begin{lstlisting}[language=python, numbers=none]
+x             = 1
+y             = 2
+long_variable = 3
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{``Whitespaces'' dans les expressions (suite)}
+  \begin{block}{}
+    \medskip
+    Proscrire les `espaces blancs' inutiles dans les situations suivantes
+  \end{block}
+
+  Correct :
+\begin{lstlisting}[language=python, numbers=none]
+def complex(real, imag=0.0):
+    return magic(r=real, i=imag)
+\end{lstlisting}
+
+Incorrect :
+\begin{lstlisting}[language=python, numbers=none]
+def complex(real, imag = 0.0):
+    return magic(r = real, i = imag)
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]{``Whitespaces'' dans les expressions (suite)}
+  \begin{block}{}
+    \medskip
+    MAIS ne pas supprimer tous les espaces blancs, par souci de lisibilité !
+  \end{block}
+
+  Correct :
+\begin{lstlisting}[language=python, numbers=none]
+i = i + 1
+submitted += 1
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)
+\end{lstlisting}
+
+Incorrect :
+\begin{lstlisting}[language=python, numbers=none]
+i=i+1
+submitted +=1
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]{Docstrings}
+  \begin{block}{}
+    \medskip
+    Les docstrings sont des commentaires insérés dans le code, en début de modules ou de fonctions.
+    Ils résument ce que fait la fonction et indiquent quels sont les arguments et les valeurs de retour.
+  \end{block}
+
+\begin{lstlisting}[language=python, numbers=none]
+def sample(n):
+    """
+    Get a sample from Gaussian distribution
+
+    Args:
+        n: the number of desired normal values
+
+    Returns
+        A sequence of n Gaussian values
+    """
+    return normal(0, 1, number)
+\end{lstlisting}
+
+  Voir aussi la PEP257 : \url{peps.python.org/pep-0257}
+\end{frame}
+
+\begin{frame}{Conventions de nommage}
+  \begin{block}{}
+    \medskip
+    Il existe différentes façon de nommer en python :
+    \begin{itemize}
+      \item \texttt{lowercase} ou \texttt{snake\_case}
+      \item \texttt{lowercase\_with\_underscores}
+      \item \texttt{UPPERCASE}
+      \item \texttt{UPPERCASE\_WITH\_UNDERSCORES}
+      \item \texttt{CapitalizedWords}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Conventions de nommage}
+  \begin{block}{}
+    \medskip
+    Les conventions de nommage sont les suivantes :
+    \begin{itemize}
+      \item Packages : court, \texttt{lowercase}
+      \item Modules : court, \texttt{lowercase} ou \texttt{lowercase\_with\_underscores}
+      \item Classes : \texttt{CapitalizedWords}
+      \item Variables locales : \texttt{lowercase} ou \texttt{lowercase\_with\_underscores}
+      \item Variables globales : \texttt{UPPERCASE} ou \texttt{UPPERCASE\_WITH\_UNDERSCORES}
+    \end{itemize}
+
+  \end{block}
+\end{frame}
+
+\section*{Package \texttt{pylint}}
+
+\begin{frame}[fragile]{Package \texttt{pylint}}
+  \begin{block}{Analyse de code}
+    \medskip
+    \texttt{pylint} est un outil permettant de mesurer la qualité de code selon les conventions de la PEP8 et met une note sur 10
+  \end{block}
+
+  A la racine de votre package
+\begin{lstlisting}[numbers=none]
+python -m pylint mypackage
+\end{lstlisting}
+
+  ou simplement
+\begin{lstlisting}[numbers=none]
+python -m pylint mymodule.py
+\end{lstlisting}
+    
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Package \texttt{pylint}}
+  \begin{block}{Exemple}
+    \medskip
+      \only<1>{
+        \texttt{python -m pylint sequence\_adn.py}
+        \begin{center}
+          \includegraphics[width=\textwidth]{img/pylint1.png}
+        \end{center}
+      }
+
+      \only<2>{
+        \texttt{python -m pylint sequence\_adn.py --max-line-length=150}
+        \begin{center}
+          \includegraphics[width=\textwidth]{img/pylint2.png}
+        \end{center}
+      }
+  \end{block}
+    
+\end{frame}
+
+
+\begin{frame}[fragile]{A partir de maintenant}
+
+  \begin{enumerate}
+    \item Commencer à implémenter dans un fichier \texttt{.py}
+    \item Appliquer les conventions PEP8
+    \item Analyser votre code avec \texttt{pylint}
+\begin{lstlisting}[numbers=none]
+python -m pylint module.py --max-line-length=150
+\end{lstlisting}
+  \end{enumerate}
+  
+\end{frame}
+
+\end{document}

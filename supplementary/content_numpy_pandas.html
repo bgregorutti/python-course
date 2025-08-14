@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>mymodule&period;py</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <!-- # Des modules et des librairies pour structurer un projet
+
+Une question fondamentale lorsque l'on travaille sur un projet informatique, quelque soit le langage de programmation, est de savoir comment structurer les fichiers et programmes.
+En Python, les modules et les librairies permettent d'organiser, de réutiliser et de structurer le code de manière efficace. Ils jouent un rôle essentiel dans le développement d'applications Python complexes et modulaires. 
+Autrement dit, il ne s'agit pas d'écrire des milliers de lignes de codes dans un unique fichier mais de structurer le projet de façon cohérente, et ce en utilisant des modules et des librairies.
+
+Un module est ni plus ni moins qu'un fichier Python contenant des variables, des fonctions et des classes. Tout ce que vous implémentez dans un module peut être importé et réutilisé dans d'autres fichiers composant de votre projet. Une librairie est un ensemble de modules répondant à une organisation bien précise.
+
+Par exemple, supposons que vous ayez un fichier nommé "mymodule.py" contenant le code suivant :
+
+```python
+# mymodule.py
+
+def hello():
+    print("Hello world")
+
+global_variable = 42
+```
+
+Vous pouvez maintenant importer ce module dans un autre fichier "main.py" et utiliser ses fonctionnalités, dès lors que les deux fichiers sont dans le même dossier.
+
+Exemple 1 :
+
+```python
+# main.py
+
+import mymodule
+
+mymodule.hello()                # prints "Hello world"
+print(mymodule.global_variable) # prints 42
+```
+
+Exemple 2 :
+
+```python
+# main.py
+
+import mymodule as mod
+
+mod.hello()                # prints "Hello world"
+print(mod.global_variable) # prints 42
+```
+
+Ici, la variable `mod` est un alias pour le module et permet d'alléger le code.
+
+Exemple 3 :
+
+```python
+# main.py
+
+from mymodule import hello, global_variable
+
+hello()                # prints "Hello world"
+print(global_variable) # prints 42
+```
+
+Dans ce cas, uniquement la fonction et la variable sont importées via l'instruction `from`. Attention à ne pas oublier des éléments à importer pour ne pas que le programme ait une erreur.
+
+Le module `mymodule` ci-dessus est dit local par opposition à un module intégré à une librairie externe, telle que NumPy. L'import d'un module local se fait de la même manière qu'un module externe.
+
+
+Exemple 4 :
+
+```python
+# main.py
+
+from mymodule import *
+
+hello()                # prints "Hello world"
+print(global_variable) # prints 42
+```
+
+En utilisant le caractère "*", vous importez l'ensemble des objets du module. Cette utilisation, certes très pratique, est **à proscrire**. En effet, elle est induit des conflits dans les variables.
+
+Prenons l'exemple de la fonction `sqrt` qui calcule la racine carrée d'un nombre. Cette fonction est intégrée à la librairie `math` :
+
+```python
+# main.py
+
+import math
+
+math.sqrt(4) # returns 2
+```
+
+Or cette fonction est également dans la librairie NumPy pour calculer la racine carrée d'un nombre ou de chacun des éléments d'un tableau. Vous comprendrez facilement le problème avec le code suivant :
+
+```python
+# main.py
+
+from numpy import *
+from math import *
+
+sqrt([1, 2, 3])
+```
+
+**Précision sur les librairies**
+
+Une librairie (ou package) est un répertoire qui contient un ensemble de modules Python. Elles sont utilisés pour organiser le code et pour regrouper des fonctionnalités connexes.
+Par exemple, l'organisation des fichiers suivantes est suffisante pour définir `mypackage` (le dossier parent) comme une librairie.
+
+```
+mypackage/
+    __init__.py
+    module1.py
+    module2.py
+```
+
+La seule contrainte est d'avoir un fichier nommé `__init__.py` pour que l'interpréteur reconnaisse le dossier comme une librairie. C'est tout !
+
+Ensuite, chaque fichier `module1.py` et `module2.py` est considéré comme un module par l'interpréteur et peut être importé de la manière suivante :
+
+```python
+# main.py
+
+from mypackage import module1
+
+module1.hello()
+```
+
+
+
+
+
+
+
+
+
+**Utilisation des Modules et des Packages :**
+
+- Les modules et les packages facilitent la réutilisation du code. Vous pouvez organiser vos fonctions et vos classes en modules, puis les importer dans d'autres projets Python lorsque vous en avez besoin.
+
+- Les packages permettent de créer une structure hiérarchique dans votre projet, ce qui est utile pour les projets de grande envergure. Vous pouvez avoir des sous-packages à l'intérieur de packages pour une organisation plus détaillée.
+
+- Python possède une bibliothèque standard riche qui est essentiellement constituée de modules et de packages. Vous pouvez utiliser ces modules pour accomplir diverses tâches sans avoir à réinventer la roue.
+
+- Les modules et les packages rendent le code plus lisible et maintenable, car ils permettent de diviser logiquement le code en morceaux gérables.
+
+En résumé, les modules et les packages sont des outils puissants pour organiser et structurer votre code Python, améliorant ainsi la réutilisabilité, la lisibilité et la maintenance de vos projets. Ils font partie intégrante du développement Python moderne.
+ -->
+<h1 id="librairie-scipy">Librairie SciPy</h1>
+<p>SciPy est l'une des bibliothèques open-source incontournable de l'écosystème Python. Complémentaire à la librairie NumPy, elle est spécialement conçue pour le calcul scientifique, mathématique et pour l'analyse de données.</p>
+<!-- 
+![](figs/scipy.png)
+
+## Installation
+
+SciPy est intégrée à Anaconda et ne nécessite pas d'installation explicite.
+
+Toutefois, l'installation se fait soit via `conda` (recommandé), soit `pip` :
+
+```bash
+conda install scipy
+```
+
+ou bien
+
+```bash
+pip install scipy
+``` -->
+<h2 id="fonctionnalités-principales-de-scipy">Fonctionnalités principales de SciPy</h2>
+<ol>
+<li>
+<p><strong>Intégration numérique :</strong> des outils avancés pour effectuer des intégrations numériques. Vous pouvez calculer des intégrales simples et multiples, résoudre des équations différentielles ordinaires (EDO), et bien plus encore.</p>
+</li>
+<li>
+<p><strong>Optimisation :</strong> des méthodes d'optimisation numérique pour résoudre des problèmes d'optimisation avec ou sans contraintes.</p>
+</li>
+<li>
+<p><strong>Algèbre linéaire :</strong> des fonctionnalités pour effectuer des opérations d'algèbre linéaire, telles que la résolution de systèmes linéaires, la décomposition en valeurs singulières (SVD) et la résolution de problèmes aux moindres carrés.</p>
+</li>
+<li>
+<p><strong>Traitement du signal :</strong> des fonctions pour traiter des signaux faire de l'analyse spectrale : transformée de Fourier rapides et discrètes (FFT et DFT), filtrage, convolution, etc.</p>
+</li>
+<li>
+<p><strong>Statistiques :</strong> une large gamme de fonctions statistiques, notamment des tests d'hypothèses, des distributions statistiques, des fonctions de densité de probabilité, etc.</p>
+</li>
+<li>
+<p><strong>Interpolation :</strong> des fonctions d'interpolation de données : interpolation polynomiale, spline, etc.</p>
+</li>
+<li>
+<p><strong>Traitement d'Images :</strong> La bibliothèque prend en charge le traitement d'images, y compris la lecture, l'écriture et la manipulation d'images, ainsi que des opérations telles que la convolution et la transformation.</p>
+</li>
+</ol>
+<!-- 
+## Applications courantes de SciPy
+
+**Analyse de données :** en complément des bibliothèques NumPy et Pandas, SciPy offre un large éventail de fonctionnalités pour analyser, manipuler et visualiser des ensembles de données. Par exemple, vous pouvez calculer des statistiques descriptives, effectuer des tests d'hypothèses, ajuster des modèles statistiques, etc. Par exemple :
+
+```python
+from scipy import stats
+
+# Générer des données aléatoires
+data = stats.norm.rvs(size=1000)
+
+# Test de normalité
+p_value = stats.normaltest(data).pvalue
+```
+
+**Modélisation et simulation :** SciPy permet de modéliser et simuler des systèmes dynamiques. Les capacités de résolution d'équations différentielles ordinaires (EDO) de SciPy sont essentielles pour simuler des phénomènes qui évoluent dans le temps. Par exemple, vous pouvez modéliser un oscillateur harmonique et visualiser son comportement au fil du temps :
+
+```python
+from scipy.integrate import solve_ivp
+
+# Définition de l'EDO pour un oscillateur harmonique
+def oscillateur(t, y):
+    return [y[1], -y[0]]
+
+# Conditions initiales
+y0 = [1, 0]  # Position initiale et vitesse
+
+# Intervalle de temps
+t_span = (0, 10)
+
+# Résolution de l'EDO
+sol = solve_ivp(oscillateur, t_span, y0, t_eval=range(10))
+```
+
+**Traitement du signal :** les ingénieurs et les chercheurs en traitement du signal utilisent SciPy pour effectuer diverses opérations de traitement du signal, telles que la convolution, la détection de pics et la transformation de Fourier. Par exemple, vous pouvez appliquer une convolution à un signal pour lisser ou filtrer les données :
+
+```python
+from math import sin, pi
+from scipy import signal
+
+# Générer un signal
+nr_points = 1000
+time_list = [item / nr_points for item in range(nr_points)]
+signal_in = [sin(2 * pi * 5 * t) for t in time_list] # Signal sinusoïdal
+
+# Appliquer une convolution
+kernel = signal.gaussian(50, std=10)
+signal_out = signal.convolve(signal_in, kernel, mode="same") / sum(kernel)
+```
+
+
+**Optimisation :** SciPy offre diverses méthodes numériques pour résoudre des problèmes d'optimisation, avec ou sans contraintes. Voici un exemple de minimisation d'une fonction :
+
+```python
+from scipy.optimize import minimize
+
+# Définition de la fonction à minimiser
+def objectif(x):
+    return x**2 + 2*x + 1
+
+# Minimisation de la fonction
+resultat = minimize(objectif, x0=0)
+
+print(f"Minimum trouvé à x = {resultat.x}")
+``` -->
+<h1 id="librairie-numpy">Librairie NumPy</h1>
+<p>La librairie NumPy est une référence pour le calcul numérique et l'analyse de données. Pour certains problèmes mathématiques et/ou numériques, elle complète parfaitement SciPy.</p>
+<p>NumPy c'est :</p>
+<ol>
+<li>Une structure de données représentant des tableaux multidimensionnels</li>
+<li>Un ensemble très complet de routines permettant des opérations optimisées sur les tableaux : opérations mathématiques et logiques, tris, algèbre linéaire, opérations statistiques et simulations aléatoires, etc.</li>
+</ol>
+<!-- <img width="30%" height="30%" src="https://numpy.org/images/logo.svg"> -->
+<!-- ## Installation et importation
+
+Comme pour SciPy, NumPy est intégrée à Anaconda et ne nécessite pas d'installation explicite.
+
+Toutefois, l'installation se fait soit via `conda` (recommandé), soit `pip` :
+
+```bash
+conda install numpy
+```
+
+ou bien
+
+```bash
+pip install numpy
+```
+
+L'import se fait usuellement via un alias et c'est ce que vous verrez dans la plupart des forums spécialisés :
+
+```python
+import numpy as np
+``` -->
+<h2 id="structure-de-données-ndarray">Structure de données <code>ndarray</code></h2>
+<p>L'intérêt majeur de NumPy est la définition d'une nouvelle structure de données mutable représentant des tableaux multidimensionnels, les <code>ndarray</code>.
+Cette nouvelle structure est utilisée pour stocker et manipuler des données numériques de manière optimisée, en particulier lorsqu'elles sont de très grande taille.</p>
+<h3 id="création-de-tableaux-numpy">Création de tableaux NumPy</h3>
+<p>Vous pouvez créer un tableau NumPy en utilisant la fonction <code>np.array()</code>, en général à partir d'un objet itérable tel qu'une liste ou un tuple</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+arr = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])  <span class="hljs-comment"># 1D</span>
+<span class="hljs-built_in">print</span>(arr)
+
+arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]]) <span class="hljs-comment"># 2D</span>
+<span class="hljs-built_in">print</span>(arr)
+
+arr = np.array([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]], [[<span class="hljs-number">10</span>, <span class="hljs-number">20</span>], [<span class="hljs-number">30</span>, <span class="hljs-number">40</span>]]]) <span class="hljs-comment"># 3D</span>
+<span class="hljs-built_in">print</span>(arr)
+</code></pre>
+<p>ou bien en utilisant des routines spécifiques</p>
+<pre><code class="language-python">empty_array = np.empty(shape=(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>))  <span class="hljs-comment"># Crée un tableau vide 2D avec 2 lignes et 3 colonnes</span>
+<span class="hljs-built_in">print</span>(empty_array)
+
+ones = np.ones(shape=<span class="hljs-number">10</span>)  <span class="hljs-comment"># Crée un tableau 1D avec des 1</span>
+<span class="hljs-built_in">print</span>(ones)
+
+zeros = np.zeros(shape=(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>))  <span class="hljs-comment"># Crée un tableau 3D avec des 0 : 2 tableaux 2D de taille (3, 4)</span>
+<span class="hljs-built_in">print</span>(zeros)
+
+identity = np.eye(<span class="hljs-number">10</span>) <span class="hljs-comment"># Crée une matrice identité de taille 10 x 10</span>
+<span class="hljs-built_in">print</span>(identity)
+
+numbers = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>) <span class="hljs-comment"># Génère une série de 20 nombres régulièrement espacés entre 0 et 10</span>
+<span class="hljs-built_in">print</span>(numbers)
+
+numbers = np.arange(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">.1</span>) <span class="hljs-comment"># Génère une série de nombres régulièrement espacés entre 0 et 10 avec un pas de 0.1</span>
+<span class="hljs-built_in">print</span>(numbers)
+</code></pre>
+<p>Par abus de langage, on parle de façon indifférenciée de</p>
+<ul>
+<li><strong>tableau</strong> pour désigner un objet de classe <code>ndarray</code></li>
+<li><strong>vecteur</strong> pour désigner un tableau 1D</li>
+<li><strong>matrice</strong> pour désigner un tableau 2D. A noter qu'il existe un type <code>matrix</code> dans NumPy pour des données 2D mais ce type sera définitivement supprimé dans les versions futures.</li>
+<li><strong>tensor</strong> pour désigner un tableau &gt; 2D. Ce cas est particulièrement adapté pour des images et dans les réseaux de neurones.</li>
+</ul>
+<h3 id="quelques-propriétés-des-tableaux-numpy">Quelques propriétés des tableaux NumPy</h3>
+<ul>
+<li><strong>Dimensions, attribut <code>shape</code> :</strong> l'attribut <code>shape</code> d'un tableau est un tuple indiquant le nombre d'éléments dans chaque dimension. Par exemple :</li>
+</ul>
+<pre><code class="language-python">arr = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])  <span class="hljs-comment"># 1D</span>
+arr.shape   <span class="hljs-comment"># renvoie (4,)</span>
+
+zeros = np.zeros(shape=(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>))
+zeros.shape <span class="hljs-comment"># renvoie (2, 3, 2)</span>
+</code></pre>
+<ul>
+<li><strong>Nombre de dimensions, attribut <code>ndim</code> :</strong> l'attribut ndim renvoie le nombre de dimensions du tableau, comme par exemple :</li>
+</ul>
+<pre><code class="language-python">zeros = np.zeros(shape=(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>))
+zeros.ndim <span class="hljs-comment"># renvoie 3</span>
+</code></pre>
+<ul>
+<li><strong>Type des données stockées, attribut <code>dtype</code> :</strong> les tableaux NumPy sont <strong>homogènes</strong>, ce qui signifie qu'ils contiennent des éléments de même type de données. Généralement, le type est un type numérique (<code>int</code> ou <code>float</code>) mais il est possible d'y stocker d'autres types. Le type des données stockées dans un tableau est inféré automatiquement mais peut être spécifié explicitement.</li>
+</ul>
+<pre><code class="language-python">arr = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])
+arr.dtype <span class="hljs-comment"># renvoie dtype(&#x27;int64&#x27;)</span>
+
+arr = arr.astype(<span class="hljs-string">&quot;float&quot;</span>)  <span class="hljs-comment"># change le type en float et écrase la variable</span>
+arr.dtype <span class="hljs-comment"># renvoie dtype(&#x27;float64&#x27;)</span>
+</code></pre>
+<p>Notons au passage que NumPy implémente une extension des types numériques. Il s'agit de</p>
+<ul>
+<li><code>np.int64</code> et <code>np.int32</code> : des entiers codés respectivement sur 64 bits et 32 bits</li>
+<li><code>np.float64</code> et <code>np.float32</code> : des flottants codés respectivement sur 64 bits et 32 bits</li>
+<li><code>np.complex</code> : pour les nombres complexes</li>
+<li><code>np.bool</code> : pour les booléens</li>
+</ul>
+<h3 id="accès-aux-éléments-dun-tableau-numpy-et-indexation">Accès aux éléments d'un tableau NumPy et indexation</h3>
+<p><strong>Indexation simple :</strong></p>
+<p>L'accès aux éléments d'un tableau NumPy se fait en spécifiant les positions pour chaque dimension.</p>
+<pre><code class="language-python">my_list = [[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]]
+
+arr = np.array(my_list)
+<span class="hljs-built_in">print</span>(arr[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])  <span class="hljs-comment"># Accède à l&#x27;élément à la première ligne (indice 0) et deuxième colonne (indice 1)</span>
+
+<span class="hljs-built_in">print</span>(my_list[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]) <span class="hljs-comment"># équivalent pour la liste</span>
+</code></pre>
+<p><strong>Indexation avancée :</strong></p>
+<p>NumPy prend en charge l'indexation avancée, ce qui vous permet d'extraire des sous-ensembles de données en fonction de certaines conditions. Pour rappel, accéder à un sous-ensemble d'une liste s'effectue de la manière suivante :</p>
+<pre><code class="language-python">my_list[start:stop:step]
+</code></pre>
+<p>dans le cas des tableaux NumPy, c'est pareil mais en spécifiant les indices <code>start</code>, <code>stop</code> et <code>step</code> dans chacune des dimensions en les séparant par des virgules :</p>
+<pre><code class="language-python">arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+
+<span class="hljs-built_in">print</span>(arr[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]) <span class="hljs-comment"># renvoie les lignes 2 et 3 et toutes les colonnes</span>
+<span class="hljs-built_in">print</span>(arr[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>, :]) <span class="hljs-comment"># idem en utilisant &quot;:&quot; pour la seconde dimension</span>
+<span class="hljs-built_in">print</span>(arr[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>, <span class="hljs-number">0</span>]) <span class="hljs-comment"># renvoie les lignes 2 et 3 et la première colonne</span>
+<span class="hljs-built_in">print</span>(arr[<span class="hljs-number">0</span>:<span class="hljs-number">3</span>:<span class="hljs-number">2</span>, :]) <span class="hljs-comment"># renvoie les lignes 1 et 3 et toutes les colonnes</span>
+</code></pre>
+<p><strong>Boolean indexing :</strong></p>
+<p>L'indéxation par booléen, ou boolean indexing en anglais, désigne une façon de récupérer un sous-ensemble d'un tableau de données selon des valeurs booléennes. Ce cette manière, vous pouvez spécifier non pas les indices mais un vecteur de booléen correspondant aux lignes que vous souhaitez extraire ou non.</p>
+<p>Dans l'exemple suivant</p>
+<pre><code class="language-python">booleans = np.array([<span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>])
+arr = np.array([[<span class="hljs-number">1.1</span>, <span class="hljs-number">1.2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1.5</span>, <span class="hljs-number">1.6</span>]])
+extract = arr[booleans]
+</code></pre>
+<p>on extrait la première et la troisième ligne du tableau, selon la position des <code>True</code> dans le vecteur <code>booleans</code>.</p>
+<p><em>Remarque : on parle parfois de masque, au sens où l'on souhaite masquer une partie des données.</em></p>
+<p>Il est commun d'utiliser ce type d'indexation pour la sélection des éléments du tableau selon d'une <strong>condition</strong> :</p>
+<pre><code class="language-python">arr = np.array([[<span class="hljs-number">1.1</span>, <span class="hljs-number">1.2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1.5</span>, <span class="hljs-number">1.6</span>]])
+extract = arr[arr&lt;<span class="hljs-number">2</span>]
+</code></pre>
+<p>Dans ce cas, on filtre les valeurs du tableau pour ne conserver que celles qui satisfont la condition. Le résultat est un tableau 1D, malgré le fait que l'expression <code>arr&lt;2</code> retourne un tableau 2D.
+Il est possible de transformer le tableau résultant en un tableau 2D en utilisant la méthode <code>reshape</code> :</p>
+<pre><code class="language-python">extract.reshape((<span class="hljs-number">2</span>, <span class="hljs-number">2</span>))
+</code></pre>
+<h3 id="nparray-ou-list-"><code>np.array</code> ou <code>list</code> ?</h3>
+<p>La façon de définir les tableaux et l'indexation change assez radicalement la façon de travailler sur des données, par rapport aux listes. En effet, toutes les opérations possibles sur les tableau NumPy sont optimisées pour agir sur tous les éléments en même temps sans avoir besoin d'utiliser des boucles.</p>
+<p>Par exemple, il est très simple d'accéder à une colonne d'un tableau 2D alors que dans le cas d'une liste, il aurait fallu utiliser une boucle for, plus couteuse :</p>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_column</span>(<span class="hljs-params">data_list_2d, idx</span>):
+    <span class="hljs-keyword">return</span> [item[idx] <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> data_list_2d]
+</code></pre>
+<p>Mieux, les opérations mathématiques (addition, soustraction, multiplication et division) sont prises en charge de même que les opérations matricielles plus complexes.</p>
+<pre><code class="language-python"><span class="hljs-comment"># Exemple d&#x27;opération sur les tableaux</span>
+a = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])
+b = np.array([<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>])
+addition = a + b
+multiplication = a * b
+<span class="hljs-built_in">print</span>(addition)        <span class="hljs-comment"># Renvoie [5 7 9]</span>
+<span class="hljs-built_in">print</span>(multiplication)  <span class="hljs-comment"># Renvoie [4 10 18]</span>
+</code></pre>
+<p>Exemples de fonctions d'algèbre linéaire (dans le module <code>np.linalg</code>)</p>
+<pre><code class="language-python">a = [[<span class="hljs-number">1</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]]
+b = [[<span class="hljs-number">4</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]]
+
+<span class="hljs-comment"># Produit matricel</span>
+np.dot(a, b)
+
+<span class="hljs-comment"># Inverse</span>
+np.linalg.inv(b)
+
+<span class="hljs-comment"># Norme matricielle</span>
+np.linalg.norm(b)
+</code></pre>
+<h2 id="fonctions-mathématiques">Fonctions mathématiques</h2>
+<p>NumPy offre un grand nombre de fonctions pour effectuer des opérations mathématiques et statistiques sur les tableaux. Par exemple, <code>np.sum()</code>, <code>np.mean()</code>, <code>np.max()</code>, <code>np.min()</code>, entre autres, étendent les opérations de la librairie <code>math</code>.</p>
+<p>Dans le cas ci-dessous, les opérations s'effectuent sur un tableau 2D mais renvoie une unique valeur. De façon équivalente, les résultats sont les mêmes sur le tableau <strong>vectorisé</strong> via la fonction <code>np.ravel()</code>.</p>
+<pre><code class="language-python"><span class="hljs-comment"># opérations mathématique sur un tableau 2D</span>
+data = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(data))
+<span class="hljs-built_in">print</span>(np.mean(data))
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">max</span>(data))
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">min</span>(data))
+
+<span class="hljs-comment"># De façon équivalente</span>
+flat_data = np.ravel(data)
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(flat_data))
+<span class="hljs-built_in">print</span>(np.mean(flat_data))
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">max</span>(flat_data))
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">min</span>(flat_data))
+</code></pre>
+<p><strong>Argument <code>axis</code></strong></p>
+<p>La puissance de NumPy est aussi sa flexibilité. En effet, si l'on peut faire des opérations sur l'ensemble des éléments du tableau comme ci-dessus, il est également possible de faire les mêmes opérations sur les lignes ou les colonnes en utilisant l'argument <code>axis</code>.</p>
+<pre><code class="language-python">data = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(data, axis=<span class="hljs-number">0</span>)) <span class="hljs-comment"># somme de toutes les lignes, pour chaque colonne</span>
+<span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(data, axis=<span class="hljs-number">1</span>)) <span class="hljs-comment"># somme de toutes les colonnes, pour chaque ligne</span>
+</code></pre>
+<p>Dans ce cas, le résultat n'est plus un scalaire mais un tableau de dimension égale au nombre de lignes ou au nombre de colonnes.</p>
+<p><em>Remarque : vous retrouverez l'argument axis dans plein d'autres fonctions NumPy mais également dans la librairie Pandas</em></p>
+<h2 id="module-nprandom">Module <code>np.random</code></h2>
+<p>Le module <code>np.random</code> permet de générer des nombres aléatoires et effectuer des opérations liées au hasard. Il offre un contrôle sur le processus de génération des nombres aléatoires, ce qui est utile applications scientifiques, statistiques et de simulation de processus stochastiques.</p>
+<p>Les concepts de base abordés dans cette section :</p>
+<ol>
+<li>Génération de nombres aléatoires</li>
+<li>Distribution de probabilité : distribution uniforme, Gaussienne, etc.</li>
+<li>Échantillonnage aléatoire</li>
+<li>Permutation et mélange</li>
+</ol>
+<p>Attention à ne pas confondre <code>np.random</code> avec <code>random</code> présente dans la librairie standard de Python. Tout comme les opérations mathématiques, NumPy étend la génération de nombres aléatoires à des tableaux. Dans les exemples ci-dessous, nous comparons les deux librairies.</p>
+<p><strong>Génération de nombres aléatoires</strong></p>
+<p>NumPy propose diverses fonctions pour générer des nombres aléatoires, tels que <code>rand</code>, <code>randint</code>, <code>randn</code>. En particulier, pour générer aléatoirement un entier entre 0 et 10, on utilise la fonction <code>randint</code>.</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-comment"># numpy</span>
+<span class="hljs-built_in">print</span>(np.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>))
+
+<span class="hljs-comment"># random</span>
+<span class="hljs-built_in">print</span>(random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>))
+</code></pre>
+<p>Ces fonctions permettent de générer un unique nombre (pseudo-)aléatoire. Bien entendu, l'intérêt de NumPy n'est pas limité à ce cas précis. En effet, NumPy permet de générer des tableaux, objets ndarray, dont les éléments sont générés aléatoirement, en général via un argument <code>size</code>. En utilisant <code>random</code>, on est obligé de passer par une boucle (liste de compréhension ici).</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+size = <span class="hljs-number">5</span>
+
+<span class="hljs-comment"># numpy</span>
+<span class="hljs-built_in">print</span>(np.random.randint(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">10</span>, size=size))
+
+<span class="hljs-comment"># random</span>
+<span class="hljs-built_in">print</span>([random.randint(a=<span class="hljs-number">0</span>, b=<span class="hljs-number">10</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(size)])
+</code></pre>
+<p>Le résultat de <code>np.random.randint</code> est un tableau 1D car l'argument size est un entier. Comment générer un tableau de dimension supérieure à 1 ?</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+size = (<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)
+
+<span class="hljs-comment"># numpy</span>
+<span class="hljs-built_in">print</span>(np.random.randint(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">10</span>, size=size))
+
+<span class="hljs-comment"># random</span>
+nrows, ncols = size
+<span class="hljs-built_in">print</span>([[random.randint(a=<span class="hljs-number">0</span>, b=<span class="hljs-number">10</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(ncols)] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(nrows)])
+</code></pre>
+<p>(ça devient compliqué en utilisant <code>random</code>...)</p>
+<p><em>Remarque : le caractère &quot;_&quot; dans une boucle <code>for</code> permet de ne pas stocker la valeur récupérée depuis l'objet itérable, si bien sûr elle n'est pas nécessaire.</em></p>
+<p><strong>Distribution de probabilité : uniforme, Gaussienne, etc.</strong></p>
+<p>La plupart des loi de probabilité sont intégrées à NumPy. Dans les exemples ci-dessous, nous générons des nombres aléatoires selon un distributions uniforme et Gaussienne. Vous trouverez aisément comment générer selon d'autres lois de probabilité.</p>
+<p>Distribution uniforme :</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+size = <span class="hljs-number">5</span>
+
+<span class="hljs-comment"># numpy / 1D</span>
+<span class="hljs-built_in">print</span>(np.random.rand(size))
+<span class="hljs-built_in">print</span>(np.random.uniform(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">1</span>, size=size))
+
+<span class="hljs-comment"># random</span>
+<span class="hljs-built_in">print</span>([random.uniform(a=<span class="hljs-number">0</span>, b=<span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(size)])
+
+<span class="hljs-comment"># numpy &gt; 1D</span>
+shape = (<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span>(np.random.uniform(low=<span class="hljs-number">0</span>, high=<span class="hljs-number">1</span>, size=shape))
+</code></pre>
+<p>Distribution Gaussienne :</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+size = <span class="hljs-number">5</span>
+
+<span class="hljs-comment"># numpy / 1D</span>
+<span class="hljs-built_in">print</span>(np.random.normal(loc=<span class="hljs-number">0</span>, scale=<span class="hljs-number">1</span>, size=size))
+
+<span class="hljs-comment"># random</span>
+<span class="hljs-built_in">print</span>([random.gauss(mu=<span class="hljs-number">0</span>, sigma=<span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(size)])
+
+<span class="hljs-comment"># numpy &gt; 1D</span>
+shape = (<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span>(np.random.normal(loc=<span class="hljs-number">0</span>, scale=<span class="hljs-number">1</span>, size=shape))
+</code></pre>
+<p><strong>Échantillonnage aléatoire</strong></p>
+<p>NumPy permet d'effectuer un échantillonnage aléatoire, avec ou sans remplacement, à partir d'un tableau de données. Ici encore, l'utilisateur peut renseigner une valeur à l'argument <code>size</code> pour la dimension du tableau de données généré. L'argument peut être un tuple si l'on souhaite un tableau de dimension supérieure à 1.</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+size = <span class="hljs-number">5</span>
+data = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+replace = <span class="hljs-literal">True</span>
+
+<span class="hljs-comment"># numpy</span>
+<span class="hljs-built_in">print</span>(np.random.choice(data, size=size, replace=replace))
+
+<span class="hljs-comment"># random with replacement</span>
+<span class="hljs-built_in">print</span>([random.choice(data) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(size)]) 
+<span class="hljs-built_in">print</span>(random.choices(data, k=size))
+
+<span class="hljs-comment"># random without replacement</span>
+sample = []
+<span class="hljs-keyword">while</span> data:
+    random_number = random.choice(data)
+    <span class="hljs-keyword">if</span> random_number <span class="hljs-keyword">in</span> data:
+        sample.append(random_number)
+        data.pop(data.index(random_number))
+</code></pre>
+<p><strong>Permutation et mélange</strong></p>
+<p>Vous pouvez utiliser NumPy pour permuter ou mélanger des éléments dans un tableau. Par exemple, pour mélanger un tableau :</p>
+<pre><code class="language-python"><span class="hljs-comment"># Mélanger un tableau d&#x27;éléments</span>
+tableau = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])
+np.random.shuffle(tableau)
+<span class="hljs-built_in">print</span>(tableau)
+</code></pre>
+<h2 id="importer-et-stocker-des-données">Importer et stocker des données</h2>
+<p>Lorsque l'on travaille sur des données, il est important de savoir les importer et les stocker. La façon se faire dépend du format du fichier que vous aurez à traiter. Le format CSV, pour comma-separated values, est très courant car très facile à ouvrir à la fois dans des outils de bureautique mais aussi dans python. On parle d'ailleurs de <strong>données structurées</strong> car elles sont organisées en lignes et colonnes.</p>
+<p>Le CSV n'est pas le seul format rencontré en pratique :</p>
+<ul>
+<li><code>.txt</code> : format similaire au CSV mais avec un séparateur parfois différent (espace, tabulation, etc.)</li>
+<li><code>.npy</code> et <code>.npz</code> : format spécifique à NumPy pour stocker des arrays</li>
+<li><code>.json</code> et <code>.xml</code> : formats de <strong>données non structurées</strong> suivant la logique clé/valeur</li>
+</ul>
+<p>Dans NumPy, les fichiers CSV ou TXT peuvent être importés via les fonctions <code>np.loadtxt</code> et <code>np.genfromtxt</code>. Exemple :</p>
+<pre><code class="language-python">np.loadtxt(<span class="hljs-string">&quot;myfile.txt&quot;</span>, delimiter=<span class="hljs-string">&quot; &quot;</span>)
+np.genfromtxt(<span class="hljs-string">&quot;myfile.csv&quot;</span>, delimiter=<span class="hljs-string">&quot;,&quot;</span>)
+</code></pre>
+<p>L'argument <code>delimiter</code> est une chaine de caractères indiquant le délimiteur défini dans les données. Les plus courants sont l'espace, la virgule ou le point-virgule.</p>
+<p>A l'inverse, des tableaux NumPy peuvent être stockés dans les mêmes formats avec la fonction <code>np.savetxt</code>, en indiquant le délimiteur :</p>
+<pre><code class="language-python">arr = np.ones((<span class="hljs-number">5</span>, <span class="hljs-number">5</span>))
+np.savetxt(<span class="hljs-string">&quot;ones.csv&quot;</span>, arr, demiliter=<span class="hljs-string">&quot;;&quot;</span>)
+</code></pre>
+<p>Il est à noter que des fichiers TXT ou CSV compressé (avec ZIP, GZ ou autres) également être importés sans décompression préalable :</p>
+<pre><code class="language-python">np.loadtxt(<span class="hljs-string">&quot;myfile.zip&quot;</span>, delimiter=<span class="hljs-string">&quot; &quot;</span>)
+</code></pre>
+<p>Comme dit plus haut, NumPy possède deux formats spécifiques aux arrays, <code>.npy</code> et <code>.npz</code>. Il s'agit de stocker les tableaux dans des fichiers binaires, lisibles uniquement avec Python. Le format <code>.npy</code> permet le stockage d'un unique tableau tandis que le format <code>np.npz</code> permet le stockage de plusieurs tableaux dans un seul fichier.</p>
+<p>Stocker des tableaux :</p>
+<pre><code class="language-python">ones = np.ones((<span class="hljs-number">5</span>, <span class="hljs-number">5</span>))
+zeros = np.zeros((<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>))
+
+<span class="hljs-comment"># Format .npy</span>
+np.save(<span class="hljs-string">&quot;ones&quot;</span>, ones)
+
+<span class="hljs-comment"># Format .npz, specifying the two arrays</span>
+np.savez(<span class="hljs-string">&quot;multiple_arrays&quot;</span>, ones, zeros)
+</code></pre>
+<p>Lire des tableaux :</p>
+<pre><code class="language-python"><span class="hljs-comment"># Format .npy</span>
+ones = np.load(<span class="hljs-string">&quot;ones.npy&quot;</span>)
+
+<span class="hljs-comment"># Format .npz</span>
+obj = np.load(<span class="hljs-string">&quot;multiple_arrays.npz&quot;</span>)
+zeros = obj[<span class="hljs-string">&quot;arr_0&quot;</span>]
+ones = obj[<span class="hljs-string">&quot;arr_1&quot;</span>]
+</code></pre>
+<p>L'objet que retourne la fonction <code>np.load</code> dans le cas d'un fichier .npz n'est pas lisible directement. Il s'apparente à un dictionnaire, dans lequel les tableaux sont accessibles par leur clé. Par défaut, les clés sont nommées arr_0, arr_1, etc. mais il est possible de modifier les clés pour des termes plus précis lors du stockage.</p>
+<p>Références :</p>
+<ul>
+<li><a href="https://numpy.org/doc/stable/user/absolute_beginners.html">NumPy: the absolute basics for beginners</a></li>
+<li><a href="https://numpy.org/doc/1.16/reference/routines.random.html">Random sampling</a></li>
+</ul>
+<h1 id="librairie-pandas-pour-la-manipulation-de-données">Librairie Pandas pour la manipulation de données</h1>
+<p>Pandas est une bibliothèque très largement utilisée dans le domaine de l'analyse des données. Elle propose un grand nombre d'outils destinés à manipuler et analyser des <strong>données tabulaires</strong> et repose sur des structures de données adaptées.</p>
+<!-- <img height="300" src="https://pandas.pydata.org/static/img/pandas_mark.svg"> -->
+<!-- ## Installation et importation
+
+Pandas est intégrée à Anaconda et ne nécessite pas d'installation explicite dans la plupart des cas. On peut cependant l'installer via `pip` ou `conda` 
+
+```
+pip install pandas
+conda install pandas
+```
+
+La convention d'importation est la suivante :
+
+```python
+import pandas as pd
+``` -->
+<h2 id="structures-de-données-de-pandas">Structures de données de Pandas</h2>
+<p>Pandas repose sur deux structures de données principales : les séries pour stocker un tableau unidimensionnel et les DataFrames pour les tableaux bidimensionnels.</p>
+<p>Concrètement, les données tabulaires sont un ensemble de données structurées en lignes et en colonnes et il est important de se munir d'une structure de données adaptée pour les analyser en Python. Par exemple, en statistique, on parle d'observations ou d'individus pour désigner les lignes et de variables, de covariables ou de features pour désigner les colonnes. Une fois ce formalisme défini, l'utilisateur peux conduire des analyses statistiques sur les individus ou les variables.</p>
+<p>A la différence de NumPy, Pandas ne propose pas de structure de données de dimension supérieure à 2. De plus le type des données stockées via Pandas est mixte au sens où chaque colonne à un type de données fixé mais différents d'un colonne à une autre.
+On retrouvera cependant quelques concepts rendant Pandas et NumPy deux librairies complémentaires.</p>
+<h3 id="séries-tableau-unidimensionnel">Séries, tableau unidimensionnel</h3>
+<p>Une série est un tableau unidimensionnel capable de contenir n'importe quel type de données. Elle est similaire à une colonne ou une ligne d'un tableau. Pour créer une série, vous pouvez utiliser la fonction <code>pd.Series()</code> en y passant un objet itérable, une liste ici :</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+data = [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-literal">True</span>, <span class="hljs-number">3.14</span>, -<span class="hljs-number">1</span>]
+serie = pd.Series(data)
+<span class="hljs-built_in">print</span>(serie)
+</code></pre>
+<p>L'affichage de la série est différent de ce que peu donner NumPy. Vous observerez en effet trois choses :</p>
+<ul>
+<li>les données affichées en colonnes</li>
+<li>les valeurs numérotées de 0 à 4. On parle d'indices de la série</li>
+<li>le type des données, ici <code>object</code> car le types des données est mixte (entiers, flottant, booléen et chaîne de caractères)</li>
+</ul>
+<p>La structure de données <code>pd.series</code> a quatre arguments principaux : <code>data</code>, <code>index</code>, <code>dtype</code> et <code>name</code>.</p>
+<p>L'argument <code>data</code> est naturellement pour renseigner les données à stocker dans la série (une liste par exemple).</p>
+<p>L'argument optionnel <code>index</code> permet de définir l'indices des éléments et d'y accéder facilement.
+Par défaut, les indices sont des incréments partants de 0.</p>
+<p>L'argument optionnel <code>dtype</code> permet de définir le type des données. S'il n'est pas renseigné, Pandas infère le type des données</p>
+<p>L'argument optionnel <code>name</code> permet de donner un nom à la série.</p>
+<pre><code class="language-python">data = [<span class="hljs-number">1</span>, <span class="hljs-string">&quot;hello&quot;</span>, <span class="hljs-literal">True</span>, <span class="hljs-number">3.14</span>, -<span class="hljs-number">1</span>]
+serie = pd.Series(data=data, index=(<span class="hljs-string">&quot;item_1&quot;</span>, <span class="hljs-string">&quot;item_2&quot;</span>, <span class="hljs-string">&quot;item_3&quot;</span>, <span class="hljs-string">&quot;item_4&quot;</span>, <span class="hljs-string">&quot;item_5&quot;</span>), name=<span class="hljs-string">&quot;example&quot;</span>)
+<span class="hljs-built_in">print</span>(serie)
+</code></pre>
+<p><strong>Accès aux éléments :</strong></p>
+<p>L'accès aux éléments d'une série se fait de façon similaire à un tableau NumPy en spécifiant l'index de l'élément souhaité :</p>
+<pre><code class="language-python">serie[<span class="hljs-string">&quot;item_1&quot;</span>]
+</code></pre>
+<p>Il est également possible de faire du <em>slicing</em> pour accéder aux éléments de façon plus avancée :</p>
+<pre><code class="language-python">serie[<span class="hljs-string">&quot;item_1&quot;</span>:<span class="hljs-string">&quot;item_3&quot;</span>:<span class="hljs-number">2</span>]
+</code></pre>
+<p>Dans l'exemple, on extrait les éléments correspondant aux positions allant de <code>item_1</code> à <code>item_3</code> par pas de 2.</p>
+<p>De façon alternative, et on reverra cette manière de faire un peu plus bas, on peut utiliser l'attribut <code>.loc</code> :</p>
+<pre><code class="language-python">serie.loc[<span class="hljs-string">&quot;item_1&quot;</span>]
+serie.loc[<span class="hljs-string">&quot;item_1&quot;</span>:<span class="hljs-string">&quot;item_3&quot;</span>:<span class="hljs-number">2</span>]
+</code></pre>
+<p><strong>Opérateurs mathématiques :</strong></p>
+<p>Comme pour NumPy, les opérateurs mathématiques de base (addition, produit, division, différence, etc.) sont intégrés à Pandas. Les opérations se font éléments par éléments et renvoie une série.</p>
+<pre><code class="language-python">data = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]
+serie = pd.Series(data=data)
+
+<span class="hljs-built_in">print</span>(serie + serie)
+<span class="hljs-built_in">print</span>(serie * <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span>(serie ** <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span>(serie / <span class="hljs-number">2</span>)
+<span class="hljs-built_in">print</span>(serie // <span class="hljs-number">2</span>)
+</code></pre>
+<p>Si le type des données n'est pas numérique, ces opérations peuvent quand même être possible (voir le chapitre sur le typage). C'est le cas notamment pour les chaînes de caractères pour lesquelles les opérateurs <code>+</code> et <code>*</code> sont définis :</p>
+<pre><code class="language-python">serie = pd.Series(data=[<span class="hljs-string">&quot;a string&quot;</span>, <span class="hljs-string">&quot;another string&quot;</span>])
+<span class="hljs-built_in">print</span>(serie + serie)
+<span class="hljs-built_in">print</span>(serie * <span class="hljs-number">3</span>)
+</code></pre>
+<h3 id="dataframe-tableau-bidimensionnel">DataFrame, tableau bidimensionnel</h3>
+<p>Une DataFrame est une structure de données bidimensionnelle, similaire à une table ou à une feuille de calcul et utilisée largement pour des analyses statistiques. Il est composé de lignes (les observations) et de colonnes (les variables) identifiées respectivement par des <em>index</em> ou des <em>labels</em> permettant d'identifier la position de chaque élément du tableau. De fait, chaque ligne (resp. colonne) de la dataframe est un ensemble de séries partageant <strong>le même index</strong> (resp. <strong>label</strong>).</p>
+<p>Pour créer une dataframe, vous pouvez utiliser la fonction <code>pd.DataFrame()</code> avec un objet itérable contenant les éléments à stocker.</p>
+<p>Exemple 1 : <code>list -&gt; DataFrame</code></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+data = [(<span class="hljs-string">&#x27;Alice&#x27;</span>, <span class="hljs-number">25</span>), (<span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-number">30</span>), (<span class="hljs-string">&#x27;Charlie&#x27;</span>, <span class="hljs-number">35</span>)]
+df = pd.DataFrame(data=data, columns=(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>), index=(<span class="hljs-string">&quot;item_1&quot;</span>, <span class="hljs-string">&quot;item_2&quot;</span>, <span class="hljs-string">&quot;item_3&quot;</span>))
+<span class="hljs-built_in">print</span>(df)
+</code></pre>
+<p>Exemple 2 : <code>dict -&gt; DataFrame</code></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+data = {<span class="hljs-string">&#x27;name&#x27;</span>: [<span class="hljs-string">&#x27;Alice&#x27;</span>, <span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Charlie&#x27;</span>], <span class="hljs-string">&#x27;age&#x27;</span>: [<span class="hljs-number">25</span>, <span class="hljs-number">30</span>, <span class="hljs-number">35</span>]}
+df = pd.DataFrame(data=data, index=(<span class="hljs-string">&quot;item_1&quot;</span>, <span class="hljs-string">&quot;item_2&quot;</span>, <span class="hljs-string">&quot;item_3&quot;</span>))
+<span class="hljs-built_in">print</span>(df)
+</code></pre>
+<p>L'avantage de l'utilisation d'un dictionnaire pour définir une dataframe est de ne pas avoir besoin de spécifier les noms de colonnes dans la définition car ils sont explicites.</p>
+<p>Pour afficher les caractéristiques du tableau :</p>
+<pre><code class="language-python"><span class="hljs-built_in">print</span>(df.index) <span class="hljs-comment"># affiche les labels des lignes</span>
+<span class="hljs-built_in">print</span>(df.columns) <span class="hljs-comment"># affiche les noms de colonnes</span>
+<span class="hljs-built_in">print</span>(df.shape) <span class="hljs-comment"># affiche les dimensions du tableau</span>
+<span class="hljs-built_in">print</span>(df.info())
+<span class="hljs-built_in">print</span>(df.dtypes)
+</code></pre>
+<p><strong>Accès aux éléments :</strong></p>
+<p>L'accès à un ou plusieurs éléments d'une dataframe est similaire aux séries mais il faut distinguer plusieurs cas.</p>
+<p>Cas 1 (sélection d'une colonne) : on sélectionne une colonne en spécifiant le <strong>label</strong> correspondant.</p>
+<pre><code class="language-python">df[<span class="hljs-string">&quot;name&quot;</span>]
+df.names <span class="hljs-comment"># alternative</span>
+</code></pre>
+<p>Cas 2 (sélection d'une ligne) : on sélectionne une colonne en spécifiant l'<strong>index</strong> correspondant et avec l'attribut <code>.loc</code>.</p>
+<pre><code class="language-python">df.loc[<span class="hljs-string">&quot;item_1&quot;</span>, :]
+</code></pre>
+<p>Cas 3 (sélection d'un élément) : on sélectionne un élément en spécifiant l'<strong>index</strong> et la <strong>colonne</strong> correspondant et avec l'attribut <code>.loc</code>.</p>
+<pre><code class="language-python">df.loc[<span class="hljs-string">&quot;item_1&quot;</span>, <span class="hljs-string">&quot;name&quot;</span>]
+</code></pre>
+<p>Bien entendu, il est possible d'extraire un sous-ensemble en utilisant la méthode du slicing comme pour les séries.</p>
+<p><em>Remarques :</em></p>
+<ul>
+<li><em>sélectionner une ligne ou une colonne entière renvoie un objet de type <code>pd.series</code>.</em></li>
+<li><em>Pandas permet également de définir des indices/labels multi-niveaux (ou hiérarchiques), voir <a href="https://pandas.pydata.org/docs/user_guide/advanced.html">ici</a></em></li>
+</ul>
+<h2 id="opérations-sur-les-dataframes">Opérations sur les dataframes</h2>
+<h3 id="opérateurs-mathématiques">Opérateurs mathématiques</h3>
+<p>Les opérations mathématiques de base sont possibles pour des Dataframe de la même manière que pour les séries, si bien sûr elles sont définies pour les types concernés. Les opérations s'effectuent élément par élément :</p>
+<pre><code class="language-python">data = {<span class="hljs-string">&#x27;name&#x27;</span>: [<span class="hljs-string">&#x27;Alice&#x27;</span>, <span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Charlie&#x27;</span>], <span class="hljs-string">&#x27;age&#x27;</span>: [<span class="hljs-number">30</span>, <span class="hljs-number">25</span>, <span class="hljs-number">35</span>]}
+df = pd.DataFrame(data=data)
+
+<span class="hljs-built_in">print</span>(df + df)
+<span class="hljs-built_in">print</span>(df * <span class="hljs-number">3</span>)
+</code></pre>
+<p>Dans ce cas, les opérations mathématiques sont limitées car les données sont de type différents (<code>int</code> et <code>str</code>). Python n'essaiera pas d'effectuer le calcul si l'opération n'est pas possible sur l'une des colonnes.</p>
+<h3 id="fonctions-statistiques">Fonctions statistiques</h3>
+<p>Comme dit plus haut, l'usage classique de Pandas est l'analyse de données. Il est donc naturel d'avoir recours à des statistiques de base telles que le minimum, le maximum, la moyenne, etc.
+Ces statistiques sont calculées à partir d'une dataframe préalablement construite, via les méthodes suivantes :</p>
+<ul>
+<li><code>df.min()</code> et <code>df.max()</code> : minimum et maximum</li>
+<li><code>df.mean()</code>, <code>df.median()</code> et <code>df.std()</code> : moyenne, médiane</li>
+<li><code>df.std()</code> et <code>df.var()</code> : écart-type et variance</li>
+<li><code>df.cov</code> et <code>df.corr</code> : covariance et corrélation</li>
+</ul>
+<p>Cette liste est non exhaustive et ce sont les méthodes principales.</p>
+<p>Il est intéressant de noter que ces méthodes ont exactement des arguments en communs :</p>
+<ul>
+<li><code>axis</code> : faire le calcul sur les lignes ou les colonnes</li>
+<li><code>skipna</code> : doit-on exclure les valeurs manquantes ?</li>
+<li><code>level</code> : faire le calcul sur un niveau particulier dans le cas d'une dataframe multi-niveau (voir <a href="https://pandas.pydata.org/docs/user_guide/advanced.html">ici</a>)</li>
+<li><code>numeric_only</code> : inclure des colonnes de type non numérique</li>
+</ul>
+<p><em><strong>A vous de jouer !</strong></em></p>
+<p><em>Tester le code ci-dessous et commenter le résultat :</em></p>
+<pre><code class="language-python">data = {<span class="hljs-string">&#x27;name&#x27;</span>: [<span class="hljs-string">&#x27;Alice&#x27;</span>, <span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Charlie&#x27;</span>], <span class="hljs-string">&#x27;age&#x27;</span>: [<span class="hljs-number">30</span>, <span class="hljs-number">25</span>, <span class="hljs-number">35</span>]}
+df = pd.DataFrame(data=data)
+df.<span class="hljs-built_in">min</span>()
+</code></pre>
+<p>En complément de ces méthodes, on peut mentionner la méthode <code>df.describe()</code> qui calcul des statistiques de base pour l'ensemble des colonnes de la dataframe.
+Or, si la dataframe contient à la fois des types numériques et non-numériques, le calcul ne se fera que sur les valeurs numérique...</p>
+<p>Pour inclure les variables non-numériques, des chaînes de caractères par exemple, utiliser <code>df.describe(include=object)</code>.</p>
+<h2 id="chargement-et-manipulation-de-données">Chargement et manipulation de données</h2>
+<p>Pandas offre une grande variété de méthodes pour charger des données à partir de différentes sources. Pour des fichiers CSV, la méthode la plus courante est <code>pd.read_csv()</code></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+data = pd.read_csv(<span class="hljs-string">&quot;donnees.csv&quot;</span>, sep=<span class="hljs-string">&quot;,&quot;</span>)
+</code></pre>
+<p>Le gros avantage de cette méthodes (et de Pandas) est que les types de données lus et les noms de colonnes sont inférés lors de l'importation et non renseignés pas l'utilisateur.</p>
+<p>A part le format CSV, tous les formats standards sont importable de la même manière pour avoir un objet de type DataFrame :</p>
+<ul>
+<li><code>read_excel</code></li>
+<li><code>read_html</code></li>
+<li><code>read_sql</code></li>
+<li><code>read_xml</code></li>
+<li><code>read_json</code></li>
+<li>etc.</li>
+</ul>
+<p>Le premier argument de ces méthodes est le chemin vers le fichier à importer ou son URL si le fichier en question est sur un serveur distant.
+Encore plus fort, Pandas peut importer un fichier zippé sans décompression préalable :</p>
+<pre><code class="language-python">pd.read_csv(<span class="hljs-string">&quot;foo.zip&quot;</span>)
+</code></pre>
+<p>L'opération inverse, sauvegarder une dataframe dans un fichier CSV se fait de la manière suivante :</p>
+<pre><code class="language-python">data.to_csv(<span class="hljs-string">&quot;donnees_modifiees.csv&quot;</span>, index=<span class="hljs-literal">False</span>)
+</code></pre>
+<p>L'argument booléen <code>index</code> permet de sauvegarder (ou pas) les indices de la dataframe. Si les indices de la dataframe sont des incréments, il n'est pas utile de les sauvegarder, d'où la valeur <code>False</code> dans l'exemple.</p>
+<h3 id="exploration-des-données">Exploration des données</h3>
+<p>Comme dit plus, Pandas offre de nombreuses fonctions pour explorer rapidement vos données. Vous pouvez utiliser <code>head()</code>, <code>tail()</code>, <code>info()</code>, <code>describe()</code> et d'autres méthodes pour en obtenir un aperçu :</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+data = pd.read_csv(<span class="hljs-string">&quot;donnees.csv&quot;</span>)
+<span class="hljs-built_in">print</span>(data.head())      <span class="hljs-comment"># Affiche les premières lignes</span>
+<span class="hljs-built_in">print</span>(data.tail())      <span class="hljs-comment"># Affiche les dernières lignes</span>
+<span class="hljs-built_in">print</span>(data.describe())  <span class="hljs-comment"># Résume les statistiques des données</span>
+</code></pre>
+<h3 id="manipulation-des-données">Manipulation des données</h3>
+<p>Pandas offre des fonctionnalités pour manipuler les données.</p>
+<p><strong>Trier les valeurs :</strong></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+df = pd.DataFrame(data={<span class="hljs-string">&quot;name&quot;</span>: [<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Charlie&quot;</span>], <span class="hljs-string">&quot;age&quot;</span>: [<span class="hljs-number">30</span>, <span class="hljs-number">25</span>, <span class="hljs-number">35</span>]})
+df_sorted = data.sort_values(by=<span class="hljs-string">&quot;Age&quot;</span>)
+<span class="hljs-built_in">print</span>(df_sorted)
+</code></pre>
+<p><strong>Grouper et agréger :</strong></p>
+<p>La méthode groupby, similaire au SQL, permet de grouper les observations de la dataframe en fonction des valeurs d'une colonne particulière :</p>
+<pre><code class="language-python">df = pd.DataFrame({<span class="hljs-string">&quot;Animal&quot;</span>: [<span class="hljs-string">&quot;Falcon&quot;</span>, <span class="hljs-string">&quot;Falcon&quot;</span>, <span class="hljs-string">&quot;Parrot&quot;</span>, <span class="hljs-string">&quot;Parrot&quot;</span>], <span class="hljs-string">&quot;Max Speed&quot;</span>: [<span class="hljs-number">380.</span>, <span class="hljs-number">370.</span>, <span class="hljs-number">24.</span>, <span class="hljs-number">26.</span>]})
+gb = df.groupby([<span class="hljs-string">&quot;Animal&quot;</span>]) <span class="hljs-comment"># groupby</span>
+gb.mean() <span class="hljs-comment"># agregation</span>
+</code></pre>
+<p>Le résultat du groupby est ensuite agrégé par une statistique qui agit sur chacun des groupes, ici la moyenne.</p>
+<p>Les autres statistiques incluent les functions : <code>min</code>, <code>max</code>, <code>count</code>, <code>sum</code>, etc.</p>
+<p>Parfois, il est nécessaire de définir la fonction d'agrégation explicitement et d'utiliser la méthode <code>apply()</code> sur l'objet <code>gb</code> :</p>
+<pre><code class="language-python">gb = df.groupby([<span class="hljs-string">&quot;Animal&quot;</span>]) <span class="hljs-comment"># groupby</span>
+gb.apply(<span class="hljs-keyword">lambda</span> x: x.median()) <span class="hljs-comment"># compute the median on the results</span>
+</code></pre>
+<p>Voir aussi les fonctions :</p>
+<ul>
+<li><code>pivot_table()</code></li>
+<li><code>crosstab()</code></li>
+</ul>
+<p><strong>Concaténer plusieurs dataframes :</strong></p>
+<p>La fonction <code>pd.concat</code> permet de rassembler plusieurs dataframes ou séries en une seule dataframe selon un axe donné. Le fonctionnement est le suivant</p>
+<pre><code class="language-python">df1 = pd.DataFrame({<span class="hljs-string">&quot;col1&quot;</span>: [<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-string">&quot;d&quot;</span>], <span class="hljs-string">&quot;col2&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]})
+df2 = pd.DataFrame({<span class="hljs-string">&quot;col1&quot;</span>: [<span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;f&quot;</span>, <span class="hljs-string">&quot;f&quot;</span>], <span class="hljs-string">&quot;col2&quot;</span>: [<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>]})
+list_of_dfs = [df1, df2]
+pd.concat(list_of_dfs)
+</code></pre>
+<p>où <code>liste_of_dfs</code> est une liste d'objets de type <code>DataFrame</code>.</p>
+<p>Par défaut, les tableaux sont concaténés <em>en lignes</em>, c'est-à-dire que de nouvelles lignes correspondant aux différentes dataframe sont ajoutées. Cela correspond à passer une valeur à l'argument <code>axis</code> comme suit :</p>
+<pre><code class="language-python">pd.concat(list_of_dfs, axis=<span class="hljs-number">0</span>)
+</code></pre>
+<p><em>Remarque : notez que les indices ne sont plus uniques. Ils correspondent aux indices des dataframes initiales. Pour ignorer les indices et en créer de nouveaux, faire :</em></p>
+<pre><code class="language-python">pd.concat(list_of_dfs, axis=<span class="hljs-number">0</span>, ignore_index=<span class="hljs-literal">True</span>)
+</code></pre>
+<p>Question : Que se passe-t-il si les dataframes n'ont pas les mêmes noms de colonnes ?</p>
+<p>A l'inverse, si l'utilisateur passe la valeur 1 à l'argument <code>axis</code>, de nouvelles colonnes sont ajoutées dans la dataframe finale. Exemple :</p>
+<pre><code class="language-python">pd.concat(list_of_dfs, axis=<span class="hljs-number">1</span>)
+</code></pre>
+<p>Dans ce cas, les dataframes sont assemblées selon les indices communs, s'il y en a et il est possible que les noms de colonnes soient les mêmes comme c'est le cas dans l'exemple.</p>
+<p>Question : Que se passe-t-il si les dataframes n'ont pas les mêmes indices ?</p>
+<p><strong>Réorganiser une dataframe</strong></p>
+<p>En pratique, il existe deux manières d'organiser des données tabulaires.</p>
+<p>Le format large (<em>wide</em> en anglais) désigne une organisation où les lignes correspondent à des individus uniques et les colonnes à des caractéristiques distinctes. On parle également de table de pivot ou de tableau croisé. Dans l'exemple ci-dessous, la variable <em>Person</em> correspond aux individus distincts et les variables <em>Age</em>, <em>Weight</em> et <em>Height</em> à leurs caractéristiques :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Person</th>
+<th style="text-align:center">Age</th>
+<th style="text-align:center">Weight</th>
+<th style="text-align:center">Height</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Bob</td>
+<td style="text-align:center">32</td>
+<td style="text-align:center">168</td>
+<td style="text-align:center">180</td>
+</tr>
+<tr>
+<td style="text-align:center">Alice</td>
+<td style="text-align:center">24</td>
+<td style="text-align:center">150</td>
+<td style="text-align:center">175</td>
+</tr>
+<tr>
+<td style="text-align:center">Steve</td>
+<td style="text-align:center">64</td>
+<td style="text-align:center">144</td>
+<td style="text-align:center">165</td>
+</tr>
+</tbody>
+</table>
+<p>A l'inverse, le format long (<em>stacked</em> en anglais) contient trois colonnes distinctes, peu importe le nombre des caractéristiques collectées. La première correspond à l'identifiant des individus (ex. <em>Person</em>), la deuxièmes correspond à l'identifiant des caractéristiques (ex. <em>Variable</em>) et la troisième correspond aux valeurs des caractéristiques (ex. <em>Value</em>).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Person</th>
+<th style="text-align:center">Variable</th>
+<th style="text-align:center">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Bob</td>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">32</td>
+</tr>
+<tr>
+<td style="text-align:center">Bob</td>
+<td style="text-align:center">Weight</td>
+<td style="text-align:center">168</td>
+</tr>
+<tr>
+<td style="text-align:center">Bob</td>
+<td style="text-align:center">Height</td>
+<td style="text-align:center">180</td>
+</tr>
+<tr>
+<td style="text-align:center">Alice</td>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">24</td>
+</tr>
+<tr>
+<td style="text-align:center">Alice</td>
+<td style="text-align:center">Weight</td>
+<td style="text-align:center">150</td>
+</tr>
+<tr>
+<td style="text-align:center">Alice</td>
+<td style="text-align:center">Height</td>
+<td style="text-align:center">175</td>
+</tr>
+<tr>
+<td style="text-align:center">Steve</td>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">64</td>
+</tr>
+<tr>
+<td style="text-align:center">Steve</td>
+<td style="text-align:center">Weight</td>
+<td style="text-align:center">144</td>
+</tr>
+<tr>
+<td style="text-align:center">Steve</td>
+<td style="text-align:center">Height</td>
+<td style="text-align:center">165</td>
+</tr>
+</tbody>
+</table>
+<p>Dans Pandas, le format large est obtenu via la méthode <code>pivot</code> :</p>
+<pre><code class="language-python">df = pd.DataFrame({<span class="hljs-string">&quot;Person&quot;</span>: [<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;Steve&quot;</span>, <span class="hljs-string">&quot;Steve&quot;</span>, <span class="hljs-string">&quot;Steve&quot;</span>],
+                   <span class="hljs-string">&quot;Variable&quot;</span>: [<span class="hljs-string">&quot;Age&quot;</span>, <span class="hljs-string">&quot;Weight&quot;</span>, <span class="hljs-string">&quot;Height&quot;</span>, <span class="hljs-string">&quot;Age&quot;</span>, <span class="hljs-string">&quot;Weight&quot;</span>, <span class="hljs-string">&quot;Height&quot;</span>, <span class="hljs-string">&quot;Age&quot;</span>, <span class="hljs-string">&quot;Weight&quot;</span>, <span class="hljs-string">&quot;Height&quot;</span>],
+                   <span class="hljs-string">&quot;Value&quot;</span>: [<span class="hljs-number">32</span>, <span class="hljs-number">168</span>, <span class="hljs-number">180</span>, <span class="hljs-number">24</span>, <span class="hljs-number">150</span>, <span class="hljs-number">175</span>, <span class="hljs-number">64</span>, <span class="hljs-number">144</span>, <span class="hljs-number">165</span>]})
+df_long = df.pivot(index=<span class="hljs-string">&quot;Person&quot;</span>, columns=<span class="hljs-string">&quot;Variable&quot;</span>, values=<span class="hljs-string">&quot;Value&quot;</span>)
+</code></pre>
+<p>L'opération inverse qui consiste à passer du format large au format long se fait via la fonction <code>pd.melt</code> :</p>
+<pre><code class="language-python">df_wide = pd.melt(df_long)
+</code></pre>
+<p>Or dans ce cas, l'information des personnes, c'est-à-dire les indexes de la dataframe <code>df_long</code>, est perdue. Pour la conserver, procéder comme suit :</p>
+<pre><code class="language-python">pd.melt(df_long.reset_index(), id_vars=[<span class="hljs-string">&quot;Person&quot;</span>])
+</code></pre>
+<h3 id="visualisation-des-données">Visualisation des données</h3>
+<p>Bien que Pandas ne soit pas principalement une bibliothèque de visualisation, il s'intègre bien avec d'autres bibliothèques de visualisation telles que Matplotlib et Seaborn pour créer des graphiques et des tracés. On le verra plus en détail dans le prochain chapitre.</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+df = pd.DataFrame(data={<span class="hljs-string">&quot;name&quot;</span>: [<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Charlie&quot;</span>], <span class="hljs-string">&quot;age&quot;</span>: [<span class="hljs-number">30</span>, <span class="hljs-number">25</span>, <span class="hljs-number">35</span>]})
+df[<span class="hljs-string">&#x27;Age&#x27;</span>].plot(kind=<span class="hljs-string">&#x27;hist&#x27;</span>, bins=<span class="hljs-number">10</span>)
+plt.show()
+</code></pre>
+<p>Références :</p>
+<ul>
+<li><a href="https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf">Pandas cheat sheet</a></li>
+</ul>
+
+            
+            
+        </body>
+        </html>

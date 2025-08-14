@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Utilisation de la librairie Scikit-Learn pour la data science et l&apos;apprentissage automatique</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="utilisation-de-la-librairie-scikit-learn-pour-la-data-science-et-lapprentissage-automatique">Utilisation de la librairie Scikit-Learn pour la data science et l'apprentissage automatique</h1>
+<p>Souvent, les opérations statistiques peuvent s'implémenter en Python sans avoir besoin de librairie supplémentaires. Dans certains cas, il peut être intéressant d'y avoir recours, en particulier pour la contruction de modèles.</p>
+<p>Dans <strong>scikit-learn</strong> (créée par l'INRIA en France), de nombreuses classes suivent une interface uniforme avec des méthodes standards comme <code>fit()</code>, <code>transform()</code>, et <code>predict()</code>. Ces méthodes sont conçues pour simplifier l'utilisation des différents algorithmes de machine learning, que ce soit pour l'entraînement, la transformation des données ou les prédictions. Voici un aperçu générique de leur fonctionnement :</p>
+<h3 id="1-fit">1. <strong>fit()</strong></h3>
+<p>La méthode <code>fit()</code> est utilisée pour <strong>apprendre</strong> à partir des données d'entraînement. Elle adapte l'algorithme aux données en trouvant les paramètres optimaux pour un modèle particulier (par exemple, les coefficients dans une régression linéaire).</p>
+<ul>
+<li><strong>Entrée</strong> : Les données d'entraînement (<code>X</code>, et souvent <code>y</code> pour les modèles supervisés).</li>
+<li><strong>Sortie</strong> : Cette méthode ne retourne généralement rien, mais elle met à jour l'état interne de l'objet.</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-python">model.fit(X_train, y_train)  <span class="hljs-comment"># Entraîne le modèle sur les données X_train et y_train</span>
+</code></pre>
+<h3 id="2-transform">2. <strong>transform()</strong></h3>
+<p>La méthode <code>transform()</code> est utilisée pour <strong>modifier</strong> les données en fonction du modèle ou de la transformation qui a été appris avec <code>fit()</code>. Elle est souvent utilisée dans le cadre de la <strong>préparation des données</strong> (par exemple, la normalisation, réduction de dimension).</p>
+<ul>
+<li><strong>Entrée</strong> : Données que l'on souhaite transformer (<code>X</code>).</li>
+<li><strong>Sortie</strong> : Données transformées.</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-python">X_scaled = scaler.transform(X_test)  <span class="hljs-comment"># Applique la transformation (ex : normalisation) aux données de test</span>
+</code></pre>
+<h3 id="3-fit_transform">3. <strong>fit_transform()</strong></h3>
+<p><code>fit_transform()</code> est une combinaison de <code>fit()</code> et <code>transform()</code>. C'est une méthode pratique qui permet d'apprendre la transformation des données et de l'appliquer immédiatement en une seule étape. Elle est couramment utilisée pour des transformations de données comme la standardisation ou la réduction de dimension.</p>
+<ul>
+<li><strong>Entrée</strong> : Données d'entraînement (<code>X</code>).</li>
+<li><strong>Sortie</strong> : Données transformées.</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-python">X_scaled = scaler.fit_transform(X_train)  <span class="hljs-comment"># Normalise et ajuste l&#x27;échelle des données en une seule étape</span>
+</code></pre>
+<h3 id="4-predict">4. <strong>predict()</strong></h3>
+<p>La méthode <code>predict()</code> est utilisée pour <strong>prédire</strong> la sortie d'un modèle entraîné sur de nouvelles données. Elle est utilisée dans les modèles supervisés (régression, classification).</p>
+<ul>
+<li><strong>Entrée</strong> : Nouvelles données (<code>X</code>).</li>
+<li><strong>Sortie</strong> : Prédictions faites par le modèle (<code>y_pred</code>).</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-python">y_pred = model.predict(X_test)  <span class="hljs-comment"># Prédit les étiquettes des données de test</span>
+</code></pre>
+<h3 id="5-predict_proba">5. <strong>predict_proba()</strong></h3>
+<p>Dans certains algorithmes de classification, il est possible d'obtenir les <strong>probabilités</strong> des classes prédites. La méthode <code>predict_proba()</code> retourne ces probabilités au lieu des étiquettes finales.</p>
+<ul>
+<li><strong>Entrée</strong> : Nouvelles données (<code>X</code>).</li>
+<li><strong>Sortie</strong> : Probabilités associées à chaque classe pour chaque donnée.</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-python">y_proba = model.predict_proba(X_test)  <span class="hljs-comment"># Retourne les probabilités des classes</span>
+</code></pre>
+<h3 id="6-score">6. <strong>score()</strong></h3>
+<p>La méthode <code>score()</code> est utilisée pour <strong>évaluer</strong> les performances d'un modèle sur un ensemble de données en fonction d'une métrique intégrée (comme l'exactitude pour les modèles de classification, ou la variance expliquée pour les modèles de régression).</p>
+<ul>
+<li><strong>Entrée</strong> : Données d'entrée (<code>X</code>) et éventuellement les labels vrais (<code>y</code>).</li>
+<li><strong>Sortie</strong> : Une métrique d'évaluation (ex : précision, score R²).</li>
+</ul>
+<p>Exemple :</p>
+<pre><code class="language-python">accuracy = model.score(X_test, y_test)  <span class="hljs-comment"># Renvoie le score de précision sur les données de test</span>
+</code></pre>
+
+            
+            
+        </body>
+        </html>
