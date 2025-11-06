@@ -1,3 +1,5 @@
+% !TeX root = part_1.tex
+
 \begin{frame}{}
     \centering
     \Large
@@ -65,103 +67,54 @@
 
 
 
+  \begin{frame}[fragile]{Interprété vs compilé}
 
-
-
-
-\begin{frame}{Une histoire de versions}
-  \centering
-  \includegraphics[width=\textwidth]{img/python_versions.png}
-\end{frame}
-
-
-
-\section{Installation et revue des outils}
-
-
-
-
-\begin{frame}{Pré-requis pour le cours}
-
-  \begin{block}{}
-    \medskip
+    Différences entre langage interprété et compilé :
     \begin{itemize}
-      \item Miniconda / Anaconda, python $>=$ 3.8
-      \item Un terminal
-      \begin{itemize}
-        \item Linux / MaxOS : le terminal par défaut
-        \item Windows : privilégier Powershell, intégré à Anaconda
-      \end{itemize}
-      \item jupyter-lab ou jupyter-notebook
-      \item Un IDE (Atom, VScode, etc.)
+      \item<+-> Langage \textcolor{blue}{compilé} : traduction complète du code source en code machine avant exécution
+      \item<+-> Langage \textcolor{red}{interprété} : traduction ligne par ligne du code source en code machine pendant l'exécution
     \end{itemize}
-  \end{block}
- 
+
+    \bigskip
+
+    \begin{overprint}
+      \onslide<1>
+      Exemple de workflow en C++ :
+\begin{lstlisting}[language=bash, morekeywords=\$, numbers=none]
+$ g++ -c program.cpp -o program.o # Compilation
+$ g++ program.o -o program        # Edition de liens
+$ ./program                       # Execution
+\end{lstlisting}
+
+      \onslide<2>
+      Exemple de workflow en Python :
+\begin{lstlisting}[language=bash, morekeywords=\$, numbers=none]
+$ python program.py # Interpretation et execution
+\end{lstlisting}
+    \end{overprint}
+
+  \end{frame}
+
+  \begin{frame}{Une histoire de versions}
+    \centering
+    \includegraphics[width=\textwidth]{img/python_versions.png}
   \end{frame}
 
 
 
-\begin{frame}{Commandes Linux à connaitre}
-  \begin{center}
-    \includegraphics[width=\textwidth]{img/List-of-basic-Linux-commands.png}
-  \end{center}
-\end{frame}
+  \section{Installation et revue des outils}
 
+  \begin{frame}{Installation de Python}
 
-
-\begin{frame}[fragile]{Installation de Python}
-  Il existe plusieurs façons d'installer python (et ses outils).
-
-\begin{overprint}
-  \onslide<1>
-    \begin{block}{1/ Paquets Linux}
-    \medskip
-\begin{lstlisting}[language=bash, morekeywords=\$, numbers=none]
-$ sudo apt-get install python3 python3-pip
-\end{lstlisting}
+    Plusieurs alternatives pour installer Python :
     \begin{itemize}
-      \item Python3 est en général déjà installé
-      \item Sous Linux, \textbf{Python2 est systématiquement installé}
+      \item Installation manuelle depuis \href{www.python.org}{www.python.org} ou via un gestionnaire de paquets (Linux, MacOS)
+      \item Installation via une distribution scientifique (Anaconda, Miniconda)
     \end{itemize}
-    \end{block}
 
-  \onslide<2>
-    \begin{block}{2/ Anaconda}
-    \medskip
-      \begin{itemize}
-        \item Installation complète de l'environnement
-        \item Un très grand nombre de libraries pré-installées
-        \item Multiplateforme : Windows, Linux, MacOS
-      \end{itemize}
-    \end{block}
-    Voir : \url{https://docs.anaconda.com/anaconda/install}
-
-  \onslide<3>
-    \begin{block}{3/ Miniconda}
-      \medskip
-      \begin{itemize}
-        \item Installation minimale de l'environnement
-        \item Aucune librairie installée
-        \item Multiplateforme : Windows, Linux, MacOS
-      \end{itemize}
-    \end{block}
-    Voir : \url{https://docs.anaconda.com/anaconda/install}
-\end{overprint}
-\end{frame}
-
-
-
-% \begin{frame}[fragile]{Installation de Python}
-%   Une fois Python installé, ouvrir un terminal et écrire
-% \begin{lstlisting}[language=bash, morekeywords=\$, numbers=none]
-% $ python --version
-% $ python3 --version
-% \end{lstlisting}
-% \end{frame}
-
-
-
-
+    \bigskip
+    Installation recommandée via Anaconda, qui inclut un grand nombre de packages scientifiques et des outils de développement.
+  \end{frame}
 
 \begin{frame}{Installation de Python via Anaconda}
 
@@ -217,47 +170,12 @@ $ sudo apt-get install python3 python3-pip
    \end{center}
  \end{frame}
 
-
-\begin{frame}[fragile]{Exécution d'un programme python : alternatives}
-
-  \begin{block}{Cas 1 : via un shell python ou ipython}
-      \medskip
-      Exécution à la volée d'instructions python. Ouvrir un shell
-\begin{lstlisting}[language=bash, morekeywords=\$, numbers=none]
-$ python
-\end{lstlisting}
-      Ecrire des instructions
-\begin{lstlisting}[language=python, numbers=none]
->>> print("Je suis un programme python")
-\end{lstlisting}
-  \end{block}
-
-  \begin{center}
-    \includegraphics[width=0.7\textwidth]{img/print_shell.png}
-  \end{center}
-
-\end{frame}
-  
-
-\begin{frame}[fragile]{Exécution d'un programme python : alternatives}
-
-  \begin{block}{Cas 2 : via un terminal}
-    \medskip
-    Dans un éditeur de texte, créer un fichier \texttt{program.py} et écrire
-\begin{lstlisting}[language=python, numbers=none]
-print("Je suis un programme python")
-\end{lstlisting}
-
-    Exécuter la ligne de commande
-\begin{lstlisting}[language=bash, morekeywords=$, numbers=none]
-$ python program.py
-\end{lstlisting}
-  \end{block}
-
-  \begin{center}
-    \includegraphics[width=0.7\textwidth]{img/dummy_program}
-  \end{center}
-\end{frame}
+ 
+ \begin{frame}{VSCode}
+   \begin{center}
+     \includegraphics[width=\textwidth]{img/vscode.png}
+   \end{center}
+ \end{frame}
 
 
 \begin{frame}{Revue des outils}

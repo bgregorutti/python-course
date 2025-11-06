@@ -1,0 +1,92 @@
+\section{Vibe coding}
+
+\begin{frame}[fragile]{Qu'est-ce que ``vibe coding'' ?}
+    \begin{block}{Définition}
+        \medskip
+        Utiliser des systèmes d'IA pour aider à écrire, expliquer, tester et refactorer du code afin d'améliorer la qualité et l'agrément de lecture du projet.
+    \end{block}
+   \bigskip 
+   \begin{center}
+        \includegraphics[width=0.1\textwidth]{img/openai-logo.png}
+        \includegraphics[width=0.1\textwidth]{img/claude-logo.png}
+        \includegraphics[width=0.1\textwidth]{img/copilot-logo.png}
+        \includegraphics[width=0.1\textwidth]{img/lmstudio-logo.jpg}
+   \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Qu'est-ce que ``vibe coding'' ?}
+    \begin{center}
+        \includegraphics[width=0.6\textwidth]{img/vibe-coding.png}
+    \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Qu'est-ce que ``vibe coding'' ?}
+
+    \onslide<1->{
+        \begin{block}{Avantages}
+            \medskip
+            \begin{itemize}
+                \item Accélère le \textcolor{blue}{prototypage} (tests, docstrings, templates)
+                \item Aide à découvrir des bonnes pratiques
+                \item Facilite la \textcolor{blue}{revue} rapide, la génération d'exemples et la documentation
+                \item Permet \textcolor{blue}{d'automatiser des tâches répétitives} et proposer des refactorings
+            \end{itemize}
+        \end{block}
+    }
+
+    \onslide<2->{
+        \begin{block}{Inconvénients / risques}
+            \medskip
+            \begin{itemize}
+                \item Résultats incorrects ou non sécurisés — \textcolor{red}{toujours valider}
+                \item Risques liées \textcolor{red}{confidentialité} et à la \textcolor{red}{dépense}.
+                \item \textcolor{red}{Dépendance excessive} pouvant réduire l'apprentissage et la compréhension du code.
+                \item Variabilité et difficulté de reproductibilité selon le modèle/version du service.
+            \end{itemize}
+        \end{block}
+    }
+\end{frame}
+
+\begin{frame}{Bonnes pratiques pour le vibe coding}
+    
+    \begin{block}{Bonnes pratiques}
+        \medskip
+        \begin{itemize}
+            \item<+-> \textbf{Valider} toutes les suggestions par des revues et des tests automatisés
+            \item<+-> Ne jamais envoyer de \textbf{données sensibles} dans les prompts ; préférer des \textbf{modèles locaux} pour du code privé
+            \item<+-> Utiliser l'IA comme \textbf{assistant} (productivité + suggestions), pas comme remplacement du jugement humain
+            \item<+-> Intégrer IA dans un \textbf{workflow} avec linter, tests, CI et revue de code.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% \begin{frame}{Quid de l'empreinte carbonne de l'IA ?}
+
+%     \begin{block}{L'IA n'est pas neutre !}
+%         \medskip
+%         \begin{itemize}
+%             \item Empreinte générée par : entraînements (GPU/TPU intensifs), inférence à grande échelle, datacenters et fabrication du matériel (cycle de vie)
+%             \item Facteurs clés : consommation énergétique (kWh), source d'énergie (fossile vs renouvelable), durée/fréquence des entraînements, efficience des modèles.
+%             \item Conséquences : émissions de CO2e, consommation d'eau pour refroidissement, impact lié à la fabrication et fin de vie du matériel.
+%             \item Mesures d'atténuation :
+%                 \begin{itemize}
+%                     \item Optimiser les entraînements (profiling, mixed precision, batch sizing).
+%                     \item Réduire la taille des modèles (distillation, pruning, quantization) et réutiliser les modèles existants.
+%                     \item Planifier calculs et inférences dans des régions/centres alimentés par des énergies renouvelables.
+%                     \item Mettre en place métriques et rapports (kWh, kg CO2e) pour suivre l'impact.
+%                     \item Améliorer l'efficacité logicielle et matérielle, et limiter les runs expérimentaux inutiles.
+%                 \end{itemize}
+%             \item Bonnes pratiques : peser bénéfices vs coût carbone, intégrer l'empreinte dans les revues/CI, privilégier transparence et modèles responsables.
+%         \end{itemize}
+%     \end{block}
+
+
+    
+%     \vfill
+%     \small Ref : \url{https://bonpote.com/intelligence-artificielle-le-vrai-cout-environnemental-de-la-course-a-lia/}
+
+% \end{frame}
+
+
+
