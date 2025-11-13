@@ -41,29 +41,7 @@ my_project/
 
 \begin{frame}[fragile]{Structurer un programme, version simple}
 
-  \underline{Cas 1} : un seul fichier avec l'instruction \texttt{if \_\_name\_\_ == "\_\_main\_\_"}
-
-\begin{lstlisting}[language=python, numbers=none]
-import math
-import sys
-
-def prod(a, b):
-    return a * b
-
-def add(a, b):
-    return a + b
-
-if __name__ == "__main__":
-    print(add(1, 2))
-    print(prod(1, 2))
-\end{lstlisting} 
-
-\end{frame}
-
-
-\begin{frame}[fragile]{Structurer un programme, version simple}
-
-  \underline{Cas 2} : deux fichiers
+  Exemple pour deux fichiers
 
   \texttt{module1.py}
 \begin{lstlisting}[language=python, numbers=none]
@@ -112,7 +90,7 @@ python main.py
     \begin{enumerate}
       \item un \textcolor{red}{ensemble de modules} organisés en dossiers et sous-dossiers
       \item un moyen de créer des libraries spécifiques à un \textcolor{red}{domaine particulier}
-      \item \textcolor{red}{installable} via pip ou conda
+      \item \textcolor{red}{installable} via pip, uv ou poetry
       \item un moyen d'utiliser les fonctionnalités dans \textcolor{red}{un autre package}
     \end{enumerate}
 
@@ -129,34 +107,55 @@ python main.py
 \end{frame}
 
 
-\begin{frame}[fragile]{Exemple}
+\begin{frame}[fragile]{Évolution des outils de packaging}
+
+  \begin{block}{Approche traditionnelle (jusqu'en 2023)}
+    \begin{itemize}
+      \item \texttt{setup.py} + \texttt{setup.cfg} : configuration complexe
+      \item Gestion manuelle des dépendances
+      \item Pas de fichier de lock pour la reproductibilité
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Approche moderne (2024-2025)}
+    \begin{itemize}
+      \item \texttt{pyproject.toml} : standard PEP 621
+      \item Outils modernes : \textcolor{blue}{Poetry} et \textcolor{blue}{uv}
+      \item Gestion automatique des environnements virtuels
+      \item Fichiers de lock pour la reproductibilité
+      \item Installation ultra-rapide (surtout avec uv)
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Structure moderne d'un package}
 
 \begin{lstlisting}[numbers=none]
 package_folder/
   - README.md	
-  - setup.cfg
-  - setup.py
-  - mypackage/
-    - __init__.py
-    - mymodule.py
-    - mymodule2.py
-  - test/
+  - pyproject.toml
+  - src/
+    - mypackage/
+      - __init__.py
+      - mymodule.py
+      - mymodule2.py
+  - tests/
     - test_mymodule.py
     - test_mymodule2.py
 \end{lstlisting}
 
-Installation de la librairie
-\begin{lstlisting}[numbers=none]
-pip install mypackage
-\end{lstlisting}
+\begin{block}{Changements clés}
+  \begin{itemize}
+    \item \texttt{pyproject.toml} remplace \texttt{setup.py} et \texttt{setup.cfg}
+    \item Layout \texttt{src/} recommandé pour éviter les imports accidentels
+    \item \texttt{tests/} au lieu de \texttt{test/}
+  \end{itemize}
+\end{block}
 
-Utilisation :
-\begin{lstlisting}[language=python, numbers=none]
->>> from mypackage import mymodule
->>> mymodule.sum(1, 1)
-2
-\end{lstlisting}
 \end{frame}
+
 
 \begin{frame}[fragile]{Fichier \texttt{\_\_init\_\_.py}}
   
@@ -165,85 +164,379 @@ Utilisation :
     \item Il est en général vide mais il peut contenir des instructions comme par exemple la version du package
   \end{itemize}
 \begin{lstlisting}[language=python, numbers=none]
-__version__ = "0.0.0"
+__version__ = "0.1.0"
 \end{lstlisting}
+
+\begin{block}{Note}
+  Depuis Python 3.3+, les namespace packages permettent de s'en passer dans certains cas, mais il reste recommandé de l'inclure.
+\end{block}
+
 \end{frame}
 
 
-\begin{frame}[fragile]{Fichiers \texttt{setup.py} et \texttt{setup.cfg}}
-  Les fichiers \texttt{setup.py} et \texttt{setup.cfg} permettent de configurer et d'installer le package
+\section{Poetry : le gestionnaire complet}
 
-  \begin{block}{\texttt{setup.py}}
-    \medskip
-\begin{lstlisting}[language=python, numbers=none]
-from setuptools import setup
-setup()
+\begin{frame}[fragile]{Poetry : présentation}
+
+  \begin{block}{Qu'est-ce que Poetry ?}
+    \begin{itemize}
+      \item Outil complet de gestion de packages Python
+      \item Gère les dépendances, l'environnement virtuel et la publication
+      \item Utilise \texttt{pyproject.toml} et génère \texttt{poetry.lock}
+      \item Résolution automatique des conflits de dépendances
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Installation}
+\begin{lstlisting}[language=bash, numbers=none]
+# Linux/macOS
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Windows (PowerShell)
+(Invoke-WebRequest -Uri https://install.python-poetry.org `
+  -UseBasicParsing).Content | py -
 \end{lstlisting}
   \end{block}
 
-  \begin{block}{\texttt{setup.cfg}}
-    \medskip
-\begin{lstlisting}[numbers=none]
-[metadata]
-name = mypackage
-version = attr: mypackage.__version__
-description = My package description
-long_description = file: README.md
+\end{frame}
 
-[options]
-packages = find:
-install_requires =
-  numpy
+
+\begin{frame}[fragile]{Poetry : créer un nouveau projet}
+
+\begin{lstlisting}[language=bash, numbers=none]
+# Creer un nouveau projet
+poetry new mypackage
+
+# Ou initialiser dans un dossier existant
+poetry init
 \end{lstlisting}
-    
+
+Structure générée :
+\begin{lstlisting}[numbers=none]
+mypackage/
+  - pyproject.toml
+  - README.md
+  - mypackage/
+    - __init__.py
+  - tests/
+    - __init__.py
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Poetry : le fichier \texttt{pyproject.toml}}
+
+\begin{lstlisting}[language=bash, numbers=none, basicstyle=\footnotesize\ttfamily]
+[tool.poetry]
+name = "mypackage"
+version = "0.1.0"
+description = "My package description"
+authors = ["Votre Nom <email@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.24.0"
+pandas = "^2.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+black = "^23.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+\end{lstlisting}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]{Poetry : commandes essentielles}
+
+\begin{lstlisting}[language=bash, numbers=none]
+# Installer les dependances
+poetry install
+
+# Ajouter une dependance
+poetry add numpy
+
+# Ajouter une dependance de developpement
+poetry add --group dev pytest
+
+# Activer l'environnement virtuel
+poetry shell
+
+# Executer une commande dans l'environnement
+poetry run python main.py
+
+# Construire le package
+poetry build
+
+# Publier sur PyPI
+poetry publish
+\end{lstlisting}
+
+\end{frame}
+
+
+\section{uv : la rapidité avant tout}
+
+\begin{frame}[fragile]{uv : présentation}
+
+  \begin{block}{Qu'est-ce que uv ?}
+    \begin{itemize}
+      \item Outil ultra-rapide écrit en Rust par Astral (créateurs de Ruff)
+      \item Remplaçant de pip, pip-tools, virtualenv, poetry
+      \item 10-100x plus rapide que les outils traditionnels
+      \item Compatible avec \texttt{pyproject.toml}
+      \item Gestion unifiée : environnements + dépendances + packaging
+    \end{itemize}
   \end{block}
-\end{frame}
 
-\begin{frame}{Fichier \texttt{README.md}}
-  Le fichier \texttt{README.md} est un fichier de documentation, écrit en langage ``Markdown'', comme dans les Notebooks Jupyter.
+  \begin{block}{Installation}
+\begin{lstlisting}[language=bash, numbers=none]
+# Linux/macOS
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-  Il doit décrire précisément les fonctionnalités implémentées dans le packages
-\end{frame}
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-\begin{frame}[fragile]{Les commandes à connaitre}
-
-  Installer le package localement par l'exécution du programme \texttt{setup.py}
-\begin{lstlisting}[numbers=none]
-python setup.py install
+# Avec pip (si necessaire)
+pip install uv
 \end{lstlisting}
-
-Installer le package localement avec \texttt{pip}
-\begin{lstlisting}[numbers=none]
-pip install .
-\end{lstlisting}
-
-Compiler le package dans une archive tar.gz
-\begin{lstlisting}[numbers=none]
-python setup.py sdist
-\end{lstlisting}
-
-Installer le package depuis l'archive tar.gz
-\begin{lstlisting}[numbers=none]
-pip install dist/mypackage-0.0.0.tar.gz
-\end{lstlisting}
+  \end{block}
 
 \end{frame}
 
 
-\begin{frame}{A vous de jouer}
+\begin{frame}[fragile]{uv : créer un nouveau projet}
+
+\begin{lstlisting}[language=bash, numbers=none]
+# Creer un nouveau projet
+uv init mypackage
+cd mypackage
+
+# Ou initialiser dans un dossier existant
+uv init
+\end{lstlisting}
+
+Structure générée :
+\begin{lstlisting}[numbers=none]
+mypackage/
+  - pyproject.toml
+  - README.md
+  - .python-version
+  - src/
+    - mypackage/
+      - __init__.py
+  - tests/
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{uv : le fichier \texttt{pyproject.toml}}
+
+\begin{lstlisting}[language=bash, numbers=none, basicstyle=\footnotesize\ttfamily]
+[project]
+name = "mypackage"
+version = "0.1.0"
+description = "My package description"
+authors = [
+    {name = "Votre Nom", email = "email@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{uv : commandes essentielles}
+
+\begin{lstlisting}[language=bash, numbers=none]
+# Creer un environnement virtuel
+uv venv
+
+# Installer les dependances
+uv sync
+
+# Ajouter une dependance
+uv add numpy
+
+# Ajouter une dependance de developpement
+uv add --dev pytest
+
+# Executer une commande
+uv run python main.py
+uv run pytest
+
+# Construire le package
+uv build
+
+# Installation locale en mode editable
+uv pip install -e .
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{uv : gestion des versions Python}
+
+  \begin{block}{Une fonctionnalité unique}
+    uv peut installer et gérer différentes versions de Python !
+  \end{block}
+
+\begin{lstlisting}[language=bash, numbers=none]
+# Installer une version de Python
+uv python install 3.11
+
+# Lister les versions disponibles
+uv python list
+
+# Utiliser une version specifique pour le projet
+uv venv --python 3.11
+
+# Specifier dans .python-version
+echo "3.11" > .python-version
+\end{lstlisting}
+
+\end{frame}
+
+
+\section{Comparaison et choix d'outil}
+
+\begin{frame}{Poetry vs uv : comparaison}
+
+  \begin{center}
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Critère} & \textbf{Poetry} & \textbf{uv} \\
+    \hline
+    Vitesse & Moyenne & Très rapide \\
+    Maturité & Mature (2018) & Récent (2024) \\
+    Communauté & Large & Croissante \\
+    Gestion Python & Non & Oui \\
+    Publication PyPI & Intégrée & Externe \\
+    Courbe d'apprentissage & Douce & Très douce \\
+    Écosystème & Établi & Émergent \\
+    \hline
+  \end{tabular}
+  \end{center}
+
+  \begin{block}{Recommandation}
+    \begin{itemize}
+      \item \textbf{Poetry} : projets nécessitant stabilité et publication sur PyPI
+      \item \textbf{uv} : développement rapide, projets personnels, workflow moderne
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Approche traditionnelle (pour référence)}
+
+  \begin{block}{Avec setup.py et setup.cfg}
+    Cette approche reste fonctionnelle mais est considérée comme obsolète
+  \end{block}
+
+\begin{lstlisting}[language=bash, numbers=none]
+# Installation
+python setup.py install  # obsolete
+pip install .            # Toujours valide
+
+# Construction
+python setup.py sdist    # obsolete
+pip install build        # Moderne
+python -m build          # Recommande
+\end{lstlisting}
+
+  \begin{alertblock}{Note}
+    PEP 517 et 518 ont standardisé \texttt{pyproject.toml}. L'utilisation de \texttt{setup.py} seul est découragée depuis 2021.
+  \end{alertblock}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Workflow recommandé en 2025}
 
   \begin{enumerate}
-    \item Créez un package \texttt{mypackage} avec les fonctions implémentée dans le TP ``sequence\_adn''
-    \item Créez le fichier \texttt{\_\_init\_\_.py} contenant la version de votre package
-    \item Créez les fichiers \texttt{setup.py} et \texttt{setup.cfg}
-    \item Dans un terminal / invite de commanda Anaconda
-    \begin{itemize}
-      \item Placez-vous dans le dossier contenant le package et l'installez
-      \item Placez-vous dans un autre dossier et testez en important le package installé
-    \end{itemize}
+    \item Choisir son outil : \texttt{uv} (rapide) ou \texttt{poetry} (complet)
+    \item Créer le projet : \texttt{uv init} ou \texttt{poetry new}
+    \item Développer avec l'environnement virtuel géré automatiquement
+    \item Ajouter des dépendances : \texttt{uv add} ou \texttt{poetry add}
+    \item Tester : \texttt{uv run pytest} ou \texttt{poetry run pytest}
+    \item Construire : \texttt{uv build} ou \texttt{poetry build}
   \end{enumerate}
-  
+
+  \begin{block}{Avantages}
+    \begin{itemize}
+      \item Environnements isolés automatiques
+      \item Fichiers de lock pour la reproductibilité
+      \item Gestion simplifiée des dépendances
+      \item Standards modernes (PEP 621)
+    \end{itemize}
+  \end{block}
+
 \end{frame}
+
+
+\begin{frame}[fragile]{Exercice pratique}
+
+  \begin{block}{Créer votre premier package moderne}
+    \begin{enumerate}
+      \item Choisissez uv ou poetry et installez-le
+      \item Créez un package \texttt{mathtools} avec :
+        \begin{itemize}
+          \item Un module \texttt{operations.py} (addition, multiplication)
+          \item Un module \texttt{stats.py} (moyenne, variance) utilisant numpy
+        \end{itemize}
+      \item Ajoutez des tests avec pytest
+      \item Construisez le package
+    \end{enumerate}
+  \end{block}
+
+  \begin{block}{Bonus}
+    Comparez le temps d'installation des dépendances entre pip et uv !
+  \end{block}
+
+\end{frame}
+
+
+
+
+
+
 
 
 
@@ -690,18 +983,5 @@ python -m pylint mymodule.py
     
 \end{frame}
 
-
-\begin{frame}[fragile]{A vous de jouer}
-
-  \begin{enumerate}
-    \item Placez-vous à la racine de votre package et exécutez \texttt{pylint}
-\begin{lstlisting}[numbers=none]
-python -m pylint mypackage --max-line-length=150
-\end{lstlisting}
-    \item Quelle est votre note sur 10 ?
-    \item Améliorez votre code et exécutez à nouveau \texttt{pylint}
-  \end{enumerate}
-  
-\end{frame}
 
 \end{document}
