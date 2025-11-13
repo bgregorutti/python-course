@@ -1,0 +1,498 @@
+
+\begin{frame}[fragile]{Qu'est-ce que Pandas ?}
+
+\textbf{Pandas} est une bibliothèque très largement utilisée dans le domaine de l'analyse des données.
+
+\vspace{0.5cm}
+
+\textbf{Caractéristiques principales :}
+\begin{itemize}
+    \item Manipulation et analyse de \textbf{données tabulaires}
+    \item Structures de données adaptées (Series et DataFrame)
+    \item Intégration avec NumPy, Matplotlib, Seaborn
+    \item Lecture/écriture de multiples formats de fichiers
+    \item Opérations statistiques intégrées
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Installation et importation :}
+\begin{lstlisting}[language=python, numbers=none]
+import pandas as pd
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{Structures de données Pandas}
+
+Pandas repose sur deux structures principales :
+
+\vspace{0.5cm}
+
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Series}
+\begin{itemize}
+    \item Tableau 1D
+    \item Similaire à une colonne/ligne
+    \item Types de données \textbf{mixtes}
+    \item Index personnalisable
+\end{itemize}
+
+\column{0.5\textwidth}
+\textbf{DataFrame}
+\begin{itemize}
+    \item Tableau 2D
+    \item Lignes = observations
+    \item Colonnes = variables
+    \item Chaque colonne/ligne est une Series
+\end{itemize}
+\end{columns}
+
+\vspace{0.5cm}
+\onslide<2>
+\textbf{Différences avec NumPy :}
+\begin{itemize}
+    \item Pandas : maximum 2 dimensions
+    \item Types mixtes par colonne (vs homogène pour NumPy)
+    \item Accès aux éléments par index et labels
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Series : Tableau 1D}
+
+Une série est un tableau unidimensionnel avec index.
+
+\begin{lstlisting}[language=python, numbers=none]
+data = [1, 2, 3, 4, 5]
+serie = pd.Series(data)
+\end{lstlisting}
+
+\textbf{Attributs principaux :}
+\begin{itemize}
+    \item \texttt{data} : les données à stocker
+    \item \texttt{index} : indices personnalisés (défaut : 0, 1, 2, ...)
+    \item \texttt{dtype} : type des données (inféré si non spécifié)
+    \item \texttt{name} : nom de la série
+\end{itemize}
+
+\begin{lstlisting}[language=python, numbers=none]
+serie = pd.Series(
+    data=[1, 2, 3], 
+    index=["a", "b", "c"],
+    name="exemple"
+)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Accès aux éléments d'une series}
+
+\textbf{Accès par index :}
+\begin{lstlisting}[language=python, numbers=none]
+serie = pd.Series([10, 20, 30], index=["a", "b", "c"])
+
+# Acces direct
+print(serie["a"])
+
+# Slicing
+print(serie["a":"c"])
+
+# Avec .loc
+print(serie.loc["a"])
+print(serie.loc["a":"b"])
+\end{lstlisting}
+
+\textbf{Opérations mathématiques :}
+\begin{lstlisting}[language=python, numbers=none]
+serie = pd.Series([1, 2, 3, 4, 5])
+
+print(serie + serie)  # Addition element par element
+print(serie * 2)      # Multiplication par scalaire
+print(serie ** 2)     # Puissance
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{DataFrame : tableau 2D}
+
+Une DataFrame est une structure 2D similaire à une table.
+
+\textbf{Création à partir d'une liste :}
+\begin{lstlisting}[language=python, numbers=none]
+data = [('Alice', 25), ('Bob', 30), ('Charlie', 35)]
+df = pd.DataFrame(
+    data=data, 
+    columns=("name", "age"),
+    index=("item_1", "item_2", "item_3")
+)
+\end{lstlisting}
+
+\textbf{Création à partir d'un dictionnaire :}
+\begin{lstlisting}[language=python, numbers=none]
+data = {
+    'name': ['Alice', 'Bob', 'Charlie'], 
+    'age': [25, 30, 35]
+}
+df = pd.DataFrame(
+    data=data, 
+    index=("item_1", "item_2", "item_3")
+)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Exploration d'une DataFrame}
+
+\textbf{Afficher les caractéristiques :}
+\begin{lstlisting}[language=python, numbers=none]
+print(df.index)     # Labels des lignes
+print(df.columns)   # Noms des colonnes
+print(df.shape)     # Dimensions (lignes, colonnes)
+print(df.info())    # Informations generales
+print(df.dtypes)    # Types de chaque colonne
+\end{lstlisting}
+
+\textbf{Aperçu des données :}
+\begin{lstlisting}[language=python, numbers=none]
+print(df.head())      # Premieres lignes
+print(df.tail())      # Dernieres lignes
+print(df.describe())  # Statistiques descriptives
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Accès aux éléments d'une DataFrame}
+
+\textbf{Cas 1 : Sélection d'une colonne}
+\begin{lstlisting}[language=python, numbers=none]
+df["name"]      # Renvoie une Series
+df.name         # Alternative (si pas d'espaces dans le nom)
+\end{lstlisting}
+
+\textbf{Cas 2 : Sélection d'une ligne}
+\begin{lstlisting}[language=python, numbers=none]
+df.loc["item_1", :]  # Renvoie une Series
+\end{lstlisting}
+
+\textbf{Cas 3 : Sélection d'un élément}
+\begin{lstlisting}[language=python, numbers=none]
+df.loc["item_1", "name"]  # Valeur unique
+\end{lstlisting}
+
+\textbf{Slicing :}
+\begin{lstlisting}[language=python, numbers=none]
+df.loc["item_1":"item_3", "name"]
+df.loc[:, ["name", "age"]]
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Opérations mathématiques}
+
+Les opérations s'effectuent élément par élément :
+
+\begin{lstlisting}[language=python, numbers=none]
+data = {
+    'name': ['Alice', 'Bob', 'Charlie'], 
+    'age': [30, 25, 35]
+}
+df = pd.DataFrame(data=data)
+
+print(df + df)  # Fonctionne si operations definies
+print(df * 3)
+\end{lstlisting}
+
+\vspace{0.3cm}
+
+\textbf{Attention :} Les opérations ne s'appliquent que si elles sont définies pour les types concernés. Python n'effectuera pas le calcul sur les colonnes incompatibles.
+
+\end{frame}
+
+\begin{frame}[fragile]{Fonctions statistiques}
+
+Pandas offre de nombreuses méthodes statistiques :
+
+\begin{lstlisting}[language=python, numbers=none]
+df.min()      # Minimum
+df.max()      # Maximum
+df.mean()     # Moyenne
+df.median()   # Mediane
+df.std()      # Ecart-type
+df.var()      # Variance
+df.cov()      # Covariance
+df.corr()     # Correlation
+\end{lstlisting}
+
+\textbf{Arguments communs :}
+\begin{itemize}
+    \item \texttt{axis} : calcul sur lignes (0) ou colonnes (1)
+    \item \texttt{skipna} : exclure les valeurs manquantes ?
+    \item \texttt{numeric\_only} : colonnes numériques uniquement ?
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Chargement de données}
+
+Pandas peut lire de nombreux formats de fichiers :
+
+\begin{lstlisting}[language=python, numbers=none]
+# CSV
+df = pd.read_csv("donnees.csv", sep=",")
+
+# Excel
+df = pd.read_excel("donnees.xlsx")
+
+# JSON
+df = pd.read_json("donnees.json")
+
+# SQL
+df = pd.read_sql(query, connection)
+
+# Fichier zippe (sans decompression)
+df = pd.read_csv("donnees.zip")
+\end{lstlisting}
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Types de données inférés automatiquement
+    \item Noms de colonnes détectés
+    \item Support des URL distantes
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Sauvegarde de données}
+
+Sauvegarder une DataFrame dans différents formats :
+
+\begin{lstlisting}[language=python, numbers=none]
+# CSV
+df.to_csv("donnees_modifiees.csv", index=False)
+
+# Excel
+df.to_excel("donnees.xlsx", index=False)
+
+# JSON
+df.to_json("donnees.json")
+
+# SQL
+df.to_sql(table_name, connection)
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+L'argument \texttt{index=False} évite de sauvegarder les indices si ce sont de simples incréments (0, 1, 2, ...).
+
+\end{frame}
+
+\begin{frame}[fragile]{Tri des données}
+
+Trier une DataFrame selon une ou plusieurs colonnes :
+
+\begin{lstlisting}[language=python, numbers=none]
+df = pd.DataFrame({
+    "name": ["Alice", "Bob", "Charlie"], 
+    "age": [30, 25, 35]
+})
+
+# Trier par age
+df_sorted = df.sort_values(by="age")
+print(df_sorted)
+
+# Trier par plusieurs colonnes
+df_sorted = df.sort_values(by=["age", "name"])
+
+# Ordre decroissant
+df_sorted = df.sort_values(by="age", ascending=False)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{GroupBy et agrégation}
+
+La méthode \texttt{groupby} permet de grouper et agréger les données :
+
+\begin{lstlisting}[language=python, numbers=none]
+df = pd.DataFrame({
+    "Animal": ["Falcon", "Falcon", "Parrot", "Parrot"], 
+    "Max Speed": [380., 370., 24., 26.]
+})
+
+# Grouper par Animal
+gb = df.groupby(["Animal"])
+
+# Agregation avec statistiques
+print(gb.mean())    # Moyenne par groupe
+print(gb.min())     # Minimum par groupe
+print(gb.max())     # Maximum par groupe
+print(gb.count())   # Nombre d'elements par groupe
+print(gb.sum())     # Somme par groupe
+\end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Concaténation de DataFrames}
+
+Combiner plusieurs DataFrames avec \texttt{pd.concat()} :
+
+\begin{lstlisting}[language=python, numbers=none]
+df1 = pd.DataFrame({
+    "col1": ["a", "b", "c"], 
+    "col2": [1, 2, 3]
+})
+df2 = pd.DataFrame({
+    "col1": ["d", "e", "f"], 
+    "col2": [4, 5, 6]
+})
+
+# Concatenation en lignes (par defaut)
+result = pd.concat([df1, df2])
+result = pd.concat([df1, df2], axis=0)
+
+# Ignorer les anciens indices
+result = pd.concat([df1, df2], ignore_index=True)
+
+# Concatenation en colonnes
+result = pd.concat([df1, df2], axis=1)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{Formats \texttt{wide} vs \texttt{long}}
+
+\textbf{Format Wide (large) :}
+\begin{itemize}
+    \item Lignes = individus uniques
+    \item Colonnes = caractéristiques distinctes
+    \item Aussi appelé : table pivot, tableau croisé
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{table}
+\footnotesize
+\begin{tabular}{lccc}
+\toprule
+Person & Age & Weight & Height \\
+\midrule
+Bob & 32 & 168 & 180 \\
+Alice & 24 & 150 & 175 \\
+Steve & 64 & 144 & 165 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+
+\textbf{Format Long (stacked) :}
+\begin{itemize}
+    \item 3 colonnes : identifiant, variable, valeur
+    \item Plus compact pour données répétitives
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Formats \texttt{wide} vs \texttt{long} (suite)}
+
+\textbf{Format Long :}
+
+\begin{table}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Person & Variable & Value \\
+\midrule
+Bob & Age & 32 \\
+Bob & Weight & 168 \\
+Bob & Height & 180 \\
+Alice & Age & 24 \\
+Alice & Weight & 150 \\
+Alice & Height & 175 \\
+Steve & Age & 64 \\
+Steve & Weight & 144 \\
+Steve & Height & 165 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}[fragile]{Conversion \texttt{wide} / \texttt{long}}
+
+\textbf{Long → Wide avec \texttt{pivot()} :}
+\begin{lstlisting}[language=python, numbers=none]
+df_long = pd.DataFrame({
+    "Person": ["Bob", "Bob", "Alice", "Alice"],
+    "Variable": ["Age", "Weight", "Age", "Weight"],
+    "Value": [32, 168, 24, 150]
+})
+
+df_wide = df_long.pivot(
+    index="Person", 
+    columns="Variable", 
+    values="Value"
+)
+\end{lstlisting}
+
+\textbf{Wide → Long avec \texttt{melt()} :}
+\begin{lstlisting}[language=python, numbers=none]
+# Conserver l'index
+df_long = pd.melt(
+    df_wide.reset_index(), 
+    id_vars=["Person"]
+)
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Visualisation avec Pandas}
+
+Pandas s'intègre avec Matplotlib et Seaborn :
+
+\begin{lstlisting}[language=python, numbers=none]
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.DataFrame({
+    "name": ["Alice", "Bob", "Charlie"], 
+    "age": [30, 25, 35]
+})
+
+# Histogramme
+df['age'].plot(kind='hist', bins=10)
+plt.show()
+
+# Autres types de graphiques
+df.plot(kind='bar')      # Diagramme en barres
+df.plot(kind='line')     # Courbe
+df.plot(kind='scatter', x='col1', y='col2')  # Nuage
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}{Résumé}
+
+\textbf{Points clés :}
+
+\begin{itemize}
+    \item \textbf{Series} : tableaux 1D avec index
+    \item \textbf{DataFrame} : tableaux 2D (lignes × colonnes)
+    \item Accès via index/labels avec \texttt{.loc}
+    \item Opérations mathématiques et statistiques intégrées
+    \item Lecture/écriture de multiples formats (CSV, Excel, JSON, SQL)
+    \item GroupBy pour agrégations
+    \item Concaténation et réorganisation (pivot/melt)
+    \item Intégration avec NumPy et Matplotlib
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Ressource :} Pandas Cheat Sheet disponible sur pandas.pydata.org
+
+\end{frame}
+

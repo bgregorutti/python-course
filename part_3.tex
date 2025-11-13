@@ -1,7 +1,5 @@
 \documentclass[10pt]{beamer}
 
-
-
 \input{includes}
 \input{header}
 
@@ -42,47 +40,41 @@
 
 \section{Librairies scientifiques : SciPy, NumPy}
 
-\begin{frame}{Librarie SciPy}
-  \begin{center}
-    \includegraphics[width=\textwidth]{img/scipy.png}
-  \end{center}
+\begin{frame}[fragile]{Qu'est-ce que NumPy ?}
 
-\end{frame}
+\textbf{NumPy} (Numerical Python) est la bibliothèque fondamentale pour le calcul scientifique en Python.
 
-\begin{frame}[fragile]{Librarie NumPy}
-  \begin{block}{Librarie dédiées au calcul scientifique}
-    \medskip
-    \texttt{NumPy} est la librairie de référence pour le calcul scientifique.
+\medskip
 
-    \begin{itemize}
-      \item Structure de données représentant des tableaux multidimensionnels \texttt{ndarray}
-      \item Un ensemble très complet de routines permettant des opérations optimisées sur des tableaux
-      \item Exemples : opérations mathématiques et logiques, tris, algèbre linéaire, opérations statistiques, simulations aléatoires, etc.
-    \end{itemize}
-  \end{block}
+\textbf{Caractéristiques principales :}
+\begin{itemize}
+    \item Objet tableau N-dimensionnel puissant (\texttt{ndarray})
+    \item Opérations mathématiques efficaces sur les tableaux
+    \item Algèbre linéaire, transformées de Fourier, nombres aléatoires
+    \item Base de pandas, scikit-learn et la plupart des bibliothèques scientifiques
+\end{itemize}
 
-\begin{lstlisting}[language=python, numbers=none, morekeywords=as]
+\medskip
+
+\begin{lstlisting}[language=python, numbers=none]
 import numpy as np
+
+# Creer un tableau NumPy
+arr = np.array(<iterable>)
 \end{lstlisting}
 
 \end{frame}
+
+
+
 
 
 
 
 \begin{frame}[fragile]{Structure de données \texttt{ndarray}}
 
-\begin{block}{Création d'un objet \texttt{ndarray} à partir d'un objet itérable}
-
-\begin{lstlisting}[language=python, numbers=none]
-arr = np.array(<iterable>)
-\end{lstlisting}
-
-\end{block}
-
-Par exemple :
-\begin{block}{Création d'un objet \texttt{ndarray} à partir d'un objet itérable}
-
+\textbf{Exemple :} Création d'un objet \texttt{ndarray} à partir d'un objet itérable, ici une liste
+\bigskip
 \begin{lstlisting}[language=python, numbers=none]
 >>> arr = np.array([])
 >>> arr = np.array([1, 2])
@@ -90,175 +82,336 @@ Par exemple :
 >>> arr = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 \end{lstlisting}
 
-\end{block}
+Tableau de dimension 1 : \textbf{vecteur}
 
-{\small
-Lien vers la documentation : \href{https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html}{numpy.ndarray.html}}
+Tableau de dimension 2 : \textbf{matrice}
+
+Tableau de dimension supérieure à 2 : \textbf{tenseur}.
+
+
 \end{frame}
 
 
 \begin{frame}[fragile]{Structure de données \texttt{ndarray}}
 
-  \begin{block}{Indexing et slicing, arrays 1D}
+Différentes façons de créer des tableaux :
 
 \begin{lstlisting}[language=python, numbers=none]
->>> data = np.array([1, 2, 3])
+# Tableaux speciaux
+zeros = np.zeros((3, 4))        
+ones = np.ones((2, 3))          
+identity = np.eye(4)            
 
->>> data[1]
-2
+# Sequences
+arange = np.arange(0, 10, 2)    
+linspace = np.linspace(0, 1, 5) 
 
->>> data[0:2]
-array([1, 2])
-
->>> data[1:]
-array([2, 3])
-
->>> data[-2:]
-array([2, 3])
+# Aleatoires
+random = np.random.rand(3, 3)   
+randn = np.random.randn(3, 3)   
 \end{lstlisting}
-  \end{block}
+
 \end{frame}
+
+
+
+
+
+
 
 
 \begin{frame}[fragile]{Structure de données \texttt{ndarray}}
 
-  \begin{block}{Indexing et slicing, arrays $>$ 2D}
-
+  \begin{block}{Indexing et slicing}
+    \medskip
+    L'accès aux éléments d'un tableau NumPy se fait \textbf{par indices}:
 \begin{lstlisting}[language=python, numbers=none]
->>> arr = np.array([[1, 2], [3, 4], [5, 6]])
+# 1D array, vecteur
+arr[start:end:step]
 
->>> arr.shape
-(3, 2)
+# 2D array, matrice
+arr[start:end:step, start:end:step]
 
->>> arr[0, 1]
-2
-
->>> arr[1:3]
-array([[3, 4],
-       [5, 6]])
-
->>> arr[1:3, 0]
-array([3, 5])
+# 3D array, tenseur
+arr[start:end:step, start:end:step, start:end:step]
 \end{lstlisting}
   \end{block}
 \end{frame}
 
 
-\begin{frame}{Types de données intégrés à \texttt{NumPy}}
 
-  \begin{itemize}
-    \item Entier 64-bits \texttt{np.int64}
-    \item Entier 32-bits \texttt{np.int32}
-    \item Flottant 32-bits \texttt{np.float32}
-    \item Nombre complexe \texttt{np.complex}
-    \item Booléen \texttt{np.bool}
-    \item Le type de base \texttt{np.object}
-  \end{itemize}
+\begin{frame}[fragile]{Structure de données \texttt{ndarray}}
+  \textbf{Exemples :}
+
+\begin{lstlisting}[language=python, numbers=none]
+# Tableau 2D (matrice)
+matrice = np.array([[1, 2, 3],
+                    [4, 5, 6]])
+print(matrice.shape)  # (2, 3)
+
+# Tableau 3D (tenseur)
+tenseur = np.zeros((3, 4, 5))  # 3 couches, 4 lignes, 5 cols
+
+# Indexation
+print(matrice[0, 1])      
+print(matrice[:, 0])      
+print(matrice[1, :])      
+\end{lstlisting}
+
+
 \end{frame}
 
 
-\begin{frame}{Autres fonctionnalités de NumPy}
-  \begin{itemize}
-    \item Fonctions mathématiques sur les objets \texttt{ndarray}
-    \medskip
-    \item Simulation de variables aléatoires, module \texttt{np.random}
-    \medskip
-    \item Importation et stockage de données
-  \end{itemize}
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Listes vs tableaux NumPy}
+
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Listes}
+\begin{itemize}
+    \item Conteneur générique
+    \item Peut contenir des types mixtes
+    \item Flexible (append, insert, etc.)
+    \item Plus lent pour les calculs
+\end{itemize}
+
+\begin{lstlisting}[language=python, numbers=none]
+lst = [1, 2, 3, 4]
+mixed = [1, "bonjour", 3.14]
+\end{lstlisting}
+
+\column{0.5\textwidth}
+
+
+
+\end{columns}
+
 \end{frame}
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Listes vs tableaux NumPy}
+
+\begin{columns}
+\column{0.5\textwidth}
+\textbf{Listes}
+\begin{itemize}
+    \item Conteneur générique
+    \item Peut contenir des types mixtes
+    \item Flexible (append, insert, etc.)
+    \item Plus lent pour les calculs
+\end{itemize}
+
+\begin{lstlisting}[language=python, numbers=none]
+lst = [1, 2, 3, 4]
+mixed = [1, "bonjour", 3.14]
+\end{lstlisting}
+
+\column{0.5\textwidth}
+\textbf{Tableaux NumPy}
+\begin{itemize}
+    \item Optimisé pour les données numériques
+    \item Type fixe (homogène)
+    \item Taille fixe (redimensionnement possible)
+    \item Beaucoup plus rapide
+\end{itemize}
+
+\begin{lstlisting}[language=python, numbers=none]
+# Tableau NumPy
+arr = np.array([1, 2, 3, 4])
+\end{lstlisting}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Comparaison de performance}
+
+\textbf{Pourquoi NumPy est-il plus rapide ?}
+
+\begin{itemize}
+    \item Écrit en C (code compilé)
+    \item Stockage contigu en mémoire
+    \item \textcolor{red}{Opérations vectorisées} (pas de boucles Python)
+\end{itemize}
+
+\vspace{0.5cm}
+
+\begin{lstlisting}[language=python, numbers=none]
+# Liste Python : element par element (lent)
+lst = [1, 2, 3, 4, 5]
+result = [x * 2 for x in lst]
+
+# NumPy : operation vectorisee (rapide !)
+arr = np.array([1, 2, 3, 4, 5])
+result = arr * 2
+\end{lstlisting}
+
+\vspace{0.3cm}
+\textbf{Différence de vitesse :} NumPy peut être 10 à 100x plus rapide pour de grandes données !
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Opérations : listes vs NumPy}
+
+\begin{lstlisting}[language=python, numbers=none]
+# Listes Python - necessite des boucles
+liste1 = [1, 2, 3]
+liste2 = [4, 5, 6]
+resultat = [a + b for a, b in zip(liste1, liste2)]
+
+# NumPy - operations vectorisees
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([4, 5, 6])
+resultat = arr1 + arr2  # Addition element par element
+
+# Operations mathematiques
+arr = np.array([1, 2, 3, 4])
+print(np.mean(arr))      
+print(np.std(arr))       
+print(np.sum(arr))       
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Algèbre linéaire}
+
+NumPy fournit des opérations matricielles efficaces :
+
+\begin{lstlisting}[language=python, numbers=none]
+# Creer des matrices
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+
+# Multiplication matricielle
+C = A @ B  # ou np.dot(A, B)
+
+# Operations matricielles
+det = np.linalg.det(A)        
+inv = np.linalg.inv(A)        
+valeurs_propres = np.linalg.eig(A)  
+
+# Transposee
+A_T = A.T
+\end{lstlisting}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Broadcasting : le super pouvoir de NumPy}
+
+Le broadcasting permet des opérations entre tableaux de formes différentes :
+
+\begin{lstlisting}[language=python, numbers=none]
+# Ajouter un scalaire a un tableau
+arr = np.array([1, 2, 3, 4])
+resultat = arr + 10
+
+# Ajouter un vecteur 1D a chaque ligne d'une matrice 2D
+matrice = np.array([[1, 2, 3],
+                    [4, 5, 6]])
+vecteur = np.array([10, 20, 30])
+resultat = matrice + vecteur
+\end{lstlisting}
+
+\small
+Le broadcasting élimine le besoin de boucles explicites et est très efficace !
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Quand utiliser chaque structure}
+
+\begin{table}
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Structure} & \textbf{Utiliser quand...} & \textbf{Exemple} \\
+\hline
+\textbf{Liste} & Types mixtes nécessaires & \texttt{['nom', 42, True]} \\
+ & Insertions fréquentes & Collections dynamiques \\
+ & Petits ensembles & Données de config \\
+\hline
+\textbf{NumPy} & Calculs numériques & Opérations matricielles \\
+ & Grands ensembles & Données scientifiques \\
+ & Opérations vectorisées & Traitement d'images \\
+ & Opérations mathématiques & Statistiques, ML \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+\textbf{Règle générale :} NumPy pour les nombres, listes pour tout le reste !
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Comparaison avec d'autres structures}
+
+\begin{table}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Critère} & \textbf{Liste} & \textbf{Tuple} & \textbf{NumPy} & \textbf{Dict} \\
+\hline
+Mutable & Oui & Non & Oui & Oui \\
+\hline
+Types mixtes & Oui & Oui & \textcolor{red}{Non} & Oui \\
+\hline
+Opérations math & Lent & Lent & \textcolor{blue}{Rapide} & Non \\
+\hline
+Accès élément & O(1) & O(1) & O(1) & O(1) \\
+\hline
+Mémoire & Élevée & Moyenne & \textcolor{blue}{Faible} & Élevée \\
+\hline
+Multi-dim & Non & Non & \textcolor{blue}{Oui} & Non \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Résumé}
+
+\textbf{Points clés :}
+
+\begin{itemize}
+    \item Les tableaux NumPy sont optimisés pour les calculs numériques
+    \item Beaucoup plus rapides que les listes Python pour les opérations mathématiques
+    \item Type fixe, mémoire contiguë, opérations vectorisées
+    \item Essentiel pour le calcul scientifique, l'analyse de données et le ML
+    \item Utilisez NumPy pour les nombres, les listes pour les collections génériques
+    \item Le broadcasting permet des opérations puissantes \textcolor{red}{sans boucles}
+\end{itemize}
+
+\end{frame}
+
+
+
+
+
+
 
 
 \section{Librairies Pandas pour le traitement de données}
 
 
 
-\begin{frame}[fragile]{\includegraphics[width=.15\textwidth]{img/pandas_logo}}
-  
-  \begin{block}{En bref}
-    \medskip
-    Pandas est une librairie performante dédiée à la manipulation de données et à l'analyse de données
-  \end{block}
-
-  \begin{block}{Liens utiles}
-    \begin{itemize}
-      \item Documentation officielle : \href{https://pandas.pydata.org/}{pandas.pydata.org}
-      \item Pour commencer : \href{https://pandas.pydata.org/getting_started.html}{pandas.pydata.org/getting\_started}
-    \end{itemize}
-  \end{block}
-
-\begin{lstlisting}[language=python, numbers=none, morekeywords=as]
-import pandas as pd
-\end{lstlisting}
-\end{frame}
-
-
-
-
-\begin{frame}{\includegraphics[width=.15\textwidth]{img/pandas_logo} Structures de données}
-
-  \begin{block}{Deux structures de données}
-    \medskip
-    \begin{itemize}
-      \item \texttt{pd.DataFrame} : tableau bidimensionnel
-        \begin{itemize}
-          \item Indices sur les lignes et sur les colonnes
-          \item Données de types différents
-        \end{itemize}
-      \item \texttt{pd.Series} : tableau unidimensionnel (une ligne ou une colonne)
-    \end{itemize}
-  \end{block}
-
-\end{frame}
-
-
-\begin{frame}{\includegraphics[width=.15\textwidth]{img/pandas_logo} Fonctionnalités de Pandas}
-
-    \begin{itemize}
-      \item Operations sur les dataframes
-      \medskip 
-      \item Importation et sauvegarde des données
-      \medskip 
-      \item Manipulation des données : exploration, agrégation, concaténation, tri, etc.
-      \medskip 
-      \item Visualisation
-    \end{itemize}
-\end{frame}
-
-
-\section{Machine learning avec Scikit-learn}
-
-  \begin{frame}{Library \texttt{scikit-learn}}
-
-    \centering
-    \includegraphics[width=.3\textwidth]{img/logo_sklearn.png}
-    \vspace{1cm}
-    \begin{block}{Qu'est-ce que \texttt{scikit-learn} ?}
-      \medskip
-      \begin{itemize}
-          \item Bibliothèque pour l'apprentissage automatique
-          \item Simplifie l'implémentation d'algorithmes tels que classification, régression, clustering, réduction de dimension, etc.
-          \item Compatible avec NumPy, SciPy et matplotlib.
-          \item Documentation riche et nombreuses ressources en ligne : \href{https://scikit-learn.org/}{scikit-learn.org}.
-      \end{itemize}
-    \end{block}
-    
-  \end{frame}
-    
-  \begin{frame}{Library \texttt{scikit-learn}}
-    \centering
-    \includegraphics[width=.3\textwidth]{img/logo_sklearn.png}
-    \vspace{1cm}
-    \begin{block}{Fonctionnalités}
-      \medskip
-      \begin{enumerate}
-        \item \textbf{Prétraitement} : normalisation des données, encodage, etc.
-        \item \textbf{Entraînement} : choix de modèles, entraînements et prédictions
-        \item \textbf{Évaluation} : calculer des métriques de performances
-      \end{enumerate}
-    \end{block}
-
-  \end{frame}
-
+\input{pandas.tex}
 
   
   \section{Visualisation de données : Matplotlib}
@@ -363,7 +516,7 @@ plt.show() # Show the plot
   
   \begin{frame}[fragile]{\includegraphics[width=.2\textwidth]{img/logo_matplotlib} Figures and Axes}
 \begin{lstlisting}[language=Python, morekeywords={as}, numbers=none]
-# Short version (using the fact that figure and axes are automatically created)
+# Short version: figure and axes objects are automatically created
 
 import matplotlib.pyplot as plt
 
@@ -382,13 +535,13 @@ plt.show() # Show the plot
   \end{frame}
   
   \begin{frame}{\includegraphics[width=.2\textwidth]{img/logo_matplotlib} Subplots}
-    \begin{block}{What is a subplot?}
+    \begin{block}{Qu'est-ce qu'un subplot?}
       \begin{itemize}
-        \item The matplotlib.pyplot.subplots method provides a way to have \textcolor{orange}{multiple plots on a single figure}
-        \item Given the number of rows and columns, it returns a tuple (fig, ax), giving a single figure `fig` with an array of axe `ax`
+        \item La méthode \texttt{matplotlib.pyplot.subplots} crée plusieurs graphiques \textcolor{orange}{sur une même figure}.
+        \item Elle retourne un tuple (fig, ax) en fonction du nombre de lignes et de colonnes souhaitées.
       \end{itemize}
     \end{block}
-    More details:
+    Plus de détails
     \begin{itemize}
       \item \href{https://www.educative.io/edpresso/what-is-a-subplots-in-matplotlib}{educative.io/edpresso/what-is-a-subplots-in-matplotlib}
       \item \href{https://matplotlib.org/stable/gallery/subplots_axes_and_figures/subplots_demo.html}{matplotlib.org/stable/gallery/subplots\_axes\_and\_figures}
@@ -491,7 +644,7 @@ plt.show()
     \end{columns}
   
     \centering
-    \includegraphics[width=.7\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/seaborn-overview.png}
+    \includegraphics[width=.7\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/seaborn-overview.png}
   \end{frame}
   
   
@@ -549,7 +702,7 @@ sns.displot(data=df, x="temperature", kind="hist")
     \end{columns}
   
     \centering
-    \includegraphics[width=.7\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/seaborn-overview.png}
+    \includegraphics[width=.7\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/seaborn-overview.png}
   \end{frame}
   
   
@@ -589,8 +742,8 @@ sns.relplot(data=df, x="time", y="temperature", kind="line")
     \end{itemize}
     
     \begin{center}
-      \includegraphics[width=.4\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/cat-error-bar.png}
-      \includegraphics[width=.4\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/reg-fit.png}
+      \includegraphics[width=.4\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/cat-error-bar.png}
+      \includegraphics[width=.4\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/reg-fit.png}
     \end{center}
   
   \end{frame}
@@ -612,9 +765,9 @@ sns.set_theme(style="whitegrid", palette="pastel")
 \end{lstlisting}
     
     \begin{center}
-      \includegraphics[width=.3\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/set-theme-1.png}
-      \includegraphics[width=.3\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/set-theme-2.png}
-      \includegraphics[width=.3\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/set-theme-3.png}
+      \includegraphics[width=.3\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/set-theme-1.png}
+      \includegraphics[width=.3\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/set-theme-2.png}
+      \includegraphics[width=.3\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/set-theme-3.png}
     \end{center}
   
   \end{frame}
@@ -686,7 +839,7 @@ sns.jointplot(x)
     
 \begin{frame}{Seaborn: high-level interface of matplotlib}
   \begin{center}
-    \includegraphics[width=\textwidth]{/Users/bgregorutti/Documents/pro/SCAI/Formation/AbuDhabi/materials/data-visualization-slides/dataviz_python/img/seaborn-cheat.png}
+    \includegraphics[width=\textwidth]{/Users/baptistegregorutti/Documents/Repositories/gitlab/data-visualization-slides/dataviz_python/img/seaborn-cheat.png}
   \end{center}
   \tiny{Source: interactivechaos.com}
 \end{frame}
