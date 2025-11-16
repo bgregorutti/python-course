@@ -884,20 +884,6 @@ def test_hello():
 
 \end{frame}
 
-
-\begin{frame}{Quelques conseils}
-  \begin{block}{Il est important}
-    \medskip
-    \begin{itemize}
-      \item<+-> d'implémenter des modules python \textbf{par thème}
-      \item<+-> d'implémenter une fonction par ``fonctionnalité'' et éviter du code trop lourd
-      \item<+-> de proscrire la \textbf{duplication de code}
-      \item<+-> de tester chaque fonctionnalité en un \textbf{minimum de code}
-    \end{itemize}
-  \end{block}
-\end{frame}
-
-
 \begin{frame}[fragile]{Outils de tests unitaires : Pytest}
   
   \begin{block}{Deux packages à connaitre}
@@ -920,5 +906,144 @@ python -m pytest -v --cov
   }
 \end{frame}
 
+
+\section{Vibe coding}
+
+\begin{frame}[fragile]{Qu'est-ce que ``vibe coding'' ?}
+    \begin{block}{Définition}
+        \medskip
+        Utiliser des systèmes d'IA pour aider à écrire, expliquer, tester et refactorer du code afin d'améliorer la qualité et l'agrément de lecture du projet.
+    \end{block}
+   \bigskip 
+   \begin{center}
+        \includegraphics[width=0.1\textwidth]{img/openai-logo.png}
+        \includegraphics[width=0.1\textwidth]{img/claude-logo.png}
+        \includegraphics[width=0.1\textwidth]{img/copilot-logo.png}
+        \includegraphics[width=0.1\textwidth]{img/lmstudio-logo.jpg}
+   \end{center}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Qu'est-ce que ``vibe coding'' (rappel) ?}
+
+  \begin{block}{Avantages}
+      \medskip
+      \begin{itemize}
+          \item Accélère le \textcolor{blue}{prototypage} (tests, docstrings, templates)
+          \item Aide à découvrir des bonnes pratiques
+          \item Facilite la \textcolor{blue}{revue} rapide, la génération d'exemples et la documentation
+          \item Permet \textcolor{blue}{d'automatiser des tâches répétitives} et proposer des refactorings
+      \end{itemize}
+  \end{block}
+
+  \begin{block}{Inconvénients / risques}
+      \medskip
+      \begin{itemize}
+          \item Résultats incorrects ou non sécurisés — \textcolor{red}{toujours valider}
+          \item Risques liées \textcolor{red}{confidentialité} et à la \textcolor{red}{dépense}.
+          \item \textcolor{red}{Dépendance excessive} pouvant réduire l'apprentissage et la compréhension du code.
+          \item Variabilité et difficulté de reproductibilité selon le modèle/version du service.
+      \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Bonnes pratiques pour le vibe coding (rappel)}
+    
+    \begin{block}{Bonnes pratiques}
+        \medskip
+        \begin{itemize}
+            \item \textbf{Valider} toutes les suggestions par des revues et des tests automatisés
+            \item Ne jamais envoyer de \textbf{données sensibles} dans les prompts ; préférer des \textbf{modèles locaux} pour du code privé
+            \item Utiliser l'IA comme \textbf{assistant} (productivité + suggestions), pas comme remplacement du jugement humain
+            \item Intégrer IA dans un \textbf{workflow} avec linter, tests, CI et revue de code.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+\begin{frame}{Outils de vibe coding}
+
+  {\large \textbf{Avant toute chose !}}
+
+    On parle de vibe coding quand on utilise un logiciel basé sur un ou plusieurs LLM.
+
+    Ce type de logiciel \textbf{ne doit pas être confondu} avec un chatbot, c'est un peu plus compliqué : agents IA, intéractions avec le système d'exploitation, recherche sur le web, etc.
+
+  {\large \textbf{Solutions existantes :}}
+  \begin{itemize}
+    \item ChatGPT : le chatbot historique
+    \item \href{https://www.claude.com/product/claude-code}{Claude Code}
+    \item \href{https://github.com/features/copilot}{Github copilot}
+    \item \href{https://cursor.com/}{Cursor}
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Outils de vibe coding}
+\footnotesize{
+\begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Outil} & \textbf{Tarif} & \textbf{Intégration} & \textbf{Fonctionnement} \\
+    \hline
+    \hline
+    GitHub         & Gratuit avec limitations & IDEs  & Complétion de code \\
+    Copilot        & Abonnements              &       & Chatbot \\
+    \hline
+    Cursor & Essai gratuit & IDEs  & Intéractions avec le \\
+           & Abonnements   &       & système d'exploitation (\textbf{agents}) \\
+           &               &       & Création de projets complets \\
+    \hline
+    Claude    & Gratuit avec limitations & Ligne de   & Intéractions avec le \\
+    Code      & Abonnements              & commande   & système d'exploitation (\textbf{agents}) \\
+              &                          & IDEs       & Création de projets complets \\
+    \hline
+    ChatGPT & Gratuit avec limitations & Interface web & Génération de code \\
+            & Abonnements              &               &  \\
+    \hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}{Bonnes pratiques}
+
+  Quelques bonnes pratiques, parmi d'autres :
+  \begin{itemize}
+    \item<+-> Voir le projet comme tout projet de développement informatique : définir les tâches, développer, tester, itérer
+    \item<+-> Utiliser les outils d'IA comme des assistants, pas des remplacçants
+    \item<+-> Versionner le code généré (git everything and everywhere!)
+    \item<+-> Documenter le code (ou le faire faire par l'IA)
+    \item<+-> Tout tester ! Tout vérifier ! 
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Quid de l'empreinte carbone de l'IA}
+
+  Les modèles de langue sont très gourmands en ressources !
+
+  Quelques recommandations :
+  \begin{itemize}
+    \item Utiliser l'IA avec mesure et de façon responsable.
+    \item Limiter l'utilisation de l'IA à des tâches à valeur ajoutée
+    \item Utiliser des petits modèles
+    \item Utilisr des solutions locales
+  \end{itemize}
+  
+  \href{https://bonpote.com/intelligence-artificielle-le-vrai-cout-environnemental-de-la-course-a-lia/}{\underline{Le vrai coût environmental de la course à l'IA}}
+
+\end{frame}
+
+
+% Considering the Carbon Footprint of LLMs:
+
+% Use LLMs responsibly: Limit your use of LLMs to tasks that truly benefit from their capabilities.
+
+% Choose smaller, more efficient models: Opt for LLMs with a lower computational footprint whenever possible.
+
+% Fine-tune existing models: Instead of training new models from scratch, consider fine-tuning pre-trained models on your specific task. This can significantly reduce the environmental impact.
+
+% Use cloud platforms with sustainable practices: Choose cloud providers that are committed to using renewable energy and reducing their carbon emissions.
 
 \end{document}
